@@ -32,7 +32,6 @@
                 <BoxView Grid.Row="1" Grid.RowSpan="2" BackgroundColor="White"/>
             </Grid>
 
-            <!-- Create Sign In Button -->
             <Grid Grid.Row="0" Grid.Column="6" RowDefinitions="4,*,*" ColumnDefinitions="*,*,4">
                 <BoxView Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White"/>
                 <BoxView Grid.Column="2" Grid.RowSpan="2" BackgroundColor="White"/>
@@ -53,6 +52,7 @@
             <BoxView Grid.Column="5" Grid.RowSpan="7" BackgroundColor="White"/>
         </Grid>
 
+        <!-- Create Sign In Button -->
         <Button Text="Sign In" HorizontalOptions="End" VerticalOptions="Start" Margin="20,10" BackgroundColor="#151515"/>
 
         <!-- Define Central Control -->
