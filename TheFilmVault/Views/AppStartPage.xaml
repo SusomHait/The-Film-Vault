@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TheFilmVault.Views.AppStartPage"
+             Title="AppStartPage" BackgroundColor="#151515">
+    
+    <Grid Padding="100,75">
+        <!-- Create App Start Background -->
+        <Grid RowDefinitions="*,4,*,4,*,4,*" ColumnDefinitions="*,4,*,4,*,4,*">
+            <!-- Define Corner Pieces -->
+            <Grid Grid.Row="0" Grid.Column="0" RowDefinitions="4,*,*" ColumnDefinitions="4,*,*">
+                <BoxView Grid.ColumnSpan="2" BackgroundColor="White"/>
+                <BoxView Grid.RowSpan="2" BackgroundColor="White"/>
+
+                <!-- Define REC Symbol -->
+                <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Padding="20" Stroke="#151515">
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout>
+                            <Ellipse Fill="#f3c045" HeightRequest="50" WidthRequest="50"/>
+                            <Label Text="REC" TextColor="#f3c045" FontFamily="CourierBold" VerticalOptions="Center" Margin="10,8,0,0" FontSize="35"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="7">
+                            <Label Text="12:03:24 " TextColor="White" FontFamily="CourierBold" FontSize="12"/>
+                            <Label Text="| 20:24" TextColor="Gray" FontFamily="CourierBold" FontSize="12"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="6" Grid.Column="0" RowDefinitions="*,*,4" ColumnDefinitions="4,*,*">
+                <BoxView Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="White"/>
+                <BoxView Grid.Row="1" Grid.RowSpan="2" BackgroundColor="White"/>
+            </Grid>
+
+            <!-- Create Sign In Button -->
+            <Grid Grid.Row="0" Grid.Column="6" RowDefinitions="4,*,*" ColumnDefinitions="*,*,4">
+                <BoxView Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White"/>
+                <BoxView Grid.Column="2" Grid.RowSpan="2" BackgroundColor="White"/>
+            </Grid>
+
+            <Grid Grid.Row="6" Grid.Column="6" RowDefinitions="*,*,4" ColumnDefinitions="*,*,4">
+                <BoxView Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" BackgroundColor="White"/>
+                <BoxView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White"/>
+            </Grid>
+
+            <!-- Define Background Grid -->
+            <BoxView Grid.Row="1" Grid.ColumnSpan="7" BackgroundColor="White"/>
+            <BoxView Grid.Row="3" Grid.ColumnSpan="7" BackgroundColor="White"/>
+            <BoxView Grid.Row="5" Grid.ColumnSpan="7" BackgroundColor="White"/>
+
+            <BoxView Grid.Column="1" Grid.RowSpan="7" BackgroundColor="White"/>
+            <BoxView Grid.Column="3" Grid.RowSpan="7" BackgroundColor="White"/>
+            <BoxView Grid.Column="5" Grid.RowSpan="7" BackgroundColor="White"/>
+        </Grid>
+
+        <Button Text="Sign In" HorizontalOptions="End" VerticalOptions="Start" Margin="20,10" BackgroundColor="#151515"/>
+
+        <!-- Define Central Control -->
+        <Border VerticalOptions="Center" HorizontalOptions="Fill" Padding="30" MaximumWidthRequest="1000" BackgroundColor="#151515" Stroke="#151515">
+            <VerticalStackLayout>
+                <Label Text="The Film Vault" TextColor="White" HorizontalOptions="Center" FontSize="72" FontFamily="CourierBold"/>
+                <Entry Placeholder="Search for a movie..." BackgroundColor="White"/>
+                <Grid ColumnDefinitions="*,*,*">
+                    <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+                    <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+                    <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+</ContentPage>
