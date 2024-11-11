@@ -27,13 +27,13 @@
         <Grid Grid.Row="1" ColumnDefinitions="*,*,4,300" Margin="150,50">
             <BoxView BackgroundColor="White" Grid.Column="2"/>
             <Border Grid.ColumnSpan="2" BackgroundColor="#151515" StrokeThickness="0" Margin="10,0">
-                <CarouselView x:Name="newMovies" PeekAreaInsets="0" IsSwipeEnabled="False" IsScrollAnimated="False" Position="{Binding CurrentPosition}">
+                <CarouselView x:Name="newMovies" PeekAreaInsets="0" IsSwipeEnabled="False">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Border>
                                 <Grid>
                                     <Image Source="{Binding posterPath}" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Border HorizontalOptions="Fill" VerticalOptions="End" StrokeThickness="0">
+                                    <Border HorizontalOptions="Fill" VerticalOptions="End" Stroke="#151515" StrokeThickness="0">
                                         <Grid>
                                             <Grid.Background>
                                                 <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
@@ -42,7 +42,7 @@
                                                     <GradientStop Color="#15151500" Offset="1.0"/>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
-                                            <Label Text="{Binding movieTitle}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,30,0,20"/>
+                                            <Label Text="{Binding movieTitle}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,20,0,20"/>
                                         </Grid>
                                     </Border>
                                     <Border HorizontalOptions="Start" VerticalOptions="Start" StrokeThickness="0">
@@ -54,7 +54,7 @@
                                                     <GradientStop Color="#15151500" Offset="1.0"/>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
-                                            <Label Text="{Binding movieRating}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,20,30,0"/>
+                                            <Label Text="{Binding movieRating}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="20"/>
                                         </Grid>
                                     </Border>
                                 </Grid>
@@ -63,8 +63,20 @@
                     </CarouselView.ItemTemplate>
                 </CarouselView>
             </Border>
-            <Button Text=">" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding goRight}" BackgroundColor="#151515" BorderColor="White" CornerRadius="0" Grid.Column="1"/>
-            <Button Text="&lt;" HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding goLeft}" BackgroundColor="#151515" BorderColor="White" CornerRadius="0"/>
+            <Button Text=">" x:Name="prevButton" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="#15151500" BorderColor="White" BorderWidth="1" CornerRadius="0" Grid.Column="1" Margin="10,0" Clicked="goRight"/>
+            <Button Text="&lt;" x:Name="nextButton" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="#15151500" BorderColor="White" BorderWidth="1" CornerRadius="0" Margin="10,0" Clicked="goLeft"/>
+            <Border Grid.Column="3">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Button Text="Action" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Animation" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Comedy" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Drama" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Family" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Fantasy" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Horror" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <Button Text="Action" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
         </Grid>
         
         <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>

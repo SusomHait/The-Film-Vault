@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Timers;
 using System.Text.Json;
+using System.Threading;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.Maui.Controls.Internals;
 using System.Windows.Input;
@@ -77,68 +78,85 @@ public partial class MovieExplore : ContentPage
 
 		newMovies.ItemsSource = cv;
     }
-
-	public class CarouselModel : BindableObject, INotifyPropertyChanged
-	{
-		private int _currentPosition;
-		private readonly System.Timers.Timer _timer;
-		public int CurrentPosition
-		{
-			get => _currentPosition;
-			set
-			{
-				_currentPosition = value;
-				OnPropertyChanged();
-			}
-		}
-		public ICommand goRight { get; }
-		public ICommand goLeft { get; }
-		public CarouselModel()
-		{
-			_timer = new System.Timers.Timer(5000);
-			_timer.Elapsed += OnTimedEvent;
-			_timer.AutoReset = true;
-			_timer.Enabled = true;
-
-			goRight = new Command(() => goNext());
-			goLeft = new Command(() => goPrev());
-		}
-		private void goNext()
-		{
-			if (CurrentPosition == 5) CurrentPosition = 0;
-			else CurrentPosition++;
-		}
-		private void goPrev()
-		{
-			if (CurrentPosition == 0) CurrentPosition = 5;
-			else CurrentPosition--; 
-		}
-		private void OnTimedEvent(object sender, ElapsedEventArgs e)
-		{
-			MainThread.BeginInvokeOnMainThread(() => goNext());
-		}
-		public event PropertyChangedEventHandler PropertyChanged;
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-		public void Dispose()
-		{
-			_timer?.Stop();
-			_timer?.Dispose();
-		}
-	}
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-		(BindingContext as CarouselModel)?.Dispose();
-    }
-
     public MovieExplore()
 	{
 		InitializeComponent();
-		BindingContext = new CarouselModel();
 		loadCarousel();
+		initTimer();
 	}
+
+    private async void goRight(object sender, EventArgs e)
+    {
+		int current = newMovies.Position;
+		int nextIndex = (current + 1) % 6;
+
+		nextButton.IsEnabled = false;
+		resetTimer();
+        await asyncScroll(nextIndex);
+		nextButton.IsEnabled = true;
+    }
+
+    private async void goLeft(object sender, EventArgs e)
+    {
+        int current = newMovies.Position;
+		
+		if (current > 0)
+		{
+			prevButton.IsEnabled = false;
+			resetTimer();
+            await asyncScroll(current - 1);
+            prevButton.IsEnabled = true;
+        }
+    }
+	
+	public static Mutex m = new Mutex();
+	private async Task asyncScroll(int pos)
+	{
+		m.WaitOne();
+		if (pos >= 0 && pos <= 5)
+		{
+			newMovies.ScrollTo(pos);
+		}
+		m.ReleaseMutex();
+	}
+
+	private System.Timers.Timer _timer;
+	private readonly int autoplay_time = 5000;
+
+    private void initTimer()
+	{
+		_timer = new System.Timers.Timer(autoplay_time);
+		_timer.Elapsed += OnTimerElapsed;
+		_timer.AutoReset = false;
+		_timer.Start();
+	}
+
+    private void resetTimer()
+    {
+        _timer.Stop();
+        _timer.Start();
+    }
+
+    private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            int current = newMovies.Position;
+            int nextIndex = (current + 1) % 6;
+
+            nextButton.IsEnabled = false;
+			newMovies.ScrollTo(nextIndex);
+            nextButton.IsEnabled = true;
+
+            _timer.Start();
+        });
+    }
+
+    protected override void OnDisappearing()
+	{
+		_timer?.Stop();
+		_timer?.Dispose();
+		base.OnDisappearing();
+	}
+
 }
