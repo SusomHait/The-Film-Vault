@@ -4,6 +4,7 @@ using System.Timers;
 using System.Text.Json;
 using TheFilmVault.Models;
 using System.Diagnostics;
+using Microsoft.Maui.Storage;
 
 namespace TheFilmVault.Views;
 
@@ -17,7 +18,9 @@ public partial class MovieExplore : ContentPage
 
         try
 		{
-			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
+			var KEY = await SecureStorage.GetAsync("API_KEY"); 
+
+			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
 			HttpResponseMessage response = await client.GetAsync("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
 			response.EnsureSuccessStatusCode();
 
