@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace TheFilmVault.Models
 {
+
     public class Movie : BindableObject, INotifyPropertyChanged
     {
         private string? backdrop_path;
@@ -33,5 +27,11 @@ namespace TheFilmVault.Models
                 rating = value + "/10";
             }
         }
+    }
+
+    public class Genre : BindableObject, INotifyPropertyChanged
+    {
+        public int genreId { get; set; }
+        public string? genreName { get; set; }
     }
 }

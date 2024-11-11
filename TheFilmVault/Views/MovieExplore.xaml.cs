@@ -1,64 +1,120 @@
-using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Timers;
+using System.Windows.Input;
 using System.Text.Json;
 using TheFilmVault.Models;
 using System.Diagnostics;
-using Microsoft.Maui.Storage;
 
 namespace TheFilmVault.Views;
 
 public partial class MovieExplore : ContentPage
 {
+	// init app functions through main
+    public MovieExplore()
+    {
+        InitializeComponent();
+        loadCarousel();
+
+        loadGenres();
+        goGenrePage = new Command<Genre>(openGenrePage);
+        BindingContext = this;
+
+        initTimer();
+    }
+
+    // navigation to genre pages
+    public ICommand goGenrePage { get; }
+
+    private void openGenrePage(Genre calling_genre)
+    {
+        App.Current.MainPage = new Views.AppStartPage();
+    }
+
+    // API call client
     private readonly HttpClient client = new HttpClient();
 
-	public async void loadCarousel()
+    // API calls for genre options 
+    public async void loadGenres()
 	{
-        ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
+        ObservableCollection<Genre> g = new ObservableCollection<Genre>();
 
         try
-		{
-			var KEY = await SecureStorage.GetAsync("API_KEY"); 
+        {
+            var KEY = await SecureStorage.GetAsync("API_KEY");
 
-			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
-			HttpResponseMessage response = await client.GetAsync("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
-			response.EnsureSuccessStatusCode();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
+            HttpResponseMessage response = await client.GetAsync("https://api.themoviedb.org/3/genre/movie/list?language=en");
+            response.EnsureSuccessStatusCode();
 
-			string json = await response.Content.ReadAsStringAsync();
-			
-			using (JsonDocument doc = JsonDocument.Parse(json))
-			{
-				var root = doc.RootElement;
-				var nowPlaying = root.GetProperty("results");
+            string json = await response.Content.ReadAsStringAsync();
 
-				int count = 0;
-				foreach (JsonElement movie in nowPlaying.EnumerateArray())
-				{
-					if (count > 5) break;
-					long id = movie.GetProperty("id").GetInt64();
-					string? title = movie.GetProperty("title").GetString();
-					string? path = movie.GetProperty("backdrop_path").GetString();
-					string? desc = movie.GetProperty("overview").GetString();
-					string? rating = movie.GetProperty("vote_average").GetDouble().ToString();
+            using (JsonDocument doc = JsonDocument.Parse(json))
+            {
+                var root = doc.RootElement;
+                var options = root.GetProperty("genres");
 
-					cv.Add(new Movie { movieId = id, movieTitle = title, backdropPath = path, movieDesc = desc, movieRating = rating });
-					count++;
-				}
-			}
-		}
-		catch (Exception)
-		{
+                foreach (JsonElement element in options.EnumerateArray())
+                {
+                    int id = element.GetProperty("id").GetInt32();
+                    string? genre_name = element.GetProperty("name").GetString();
+
+					g.Add(new Genre { genreId = id, genreName = genre_name });
+                }
+            }
+        }
+        catch (Exception)
+        {
             Debug.WriteLine("Error in Getting Data");
         }
 
-		newMovies.ItemsSource = cv;
+		genreList.ItemsSource = g;
     }
-    public MovieExplore()
-	{
-		InitializeComponent();
-		loadCarousel();
-		initTimer();
-	}
+
+    // API calls for carousel content
+
+    public async void loadCarousel()
+    {
+        ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
+
+        try
+        {
+            var KEY = await SecureStorage.GetAsync("API_KEY");
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
+            HttpResponseMessage response = await client.GetAsync("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
+            response.EnsureSuccessStatusCode();
+
+            string json = await response.Content.ReadAsStringAsync();
+
+            using (JsonDocument doc = JsonDocument.Parse(json))
+            {
+                var root = doc.RootElement;
+                var nowPlaying = root.GetProperty("results");
+
+                int count = 0;
+                foreach (JsonElement movie in nowPlaying.EnumerateArray())
+                {
+                    if (count > 5) break;
+                    long id = movie.GetProperty("id").GetInt64();
+                    string? title = movie.GetProperty("title").GetString();
+                    string? path = movie.GetProperty("backdrop_path").GetString();
+                    string? desc = movie.GetProperty("overview").GetString();
+                    string? rating = movie.GetProperty("vote_average").GetDouble().ToString();
+
+                    cv.Add(new Movie { movieId = id, movieTitle = title, backdropPath = path, movieDesc = desc, movieRating = rating });
+                    count++;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            Debug.WriteLine("Error in Getting Data");
+        }
+
+        newMovies.ItemsSource = cv;
+    }
+
+    // Carousel control features
 
     private async void goRight(object sender, EventArgs e)
     {
@@ -95,6 +151,7 @@ public partial class MovieExplore : ContentPage
 		m.ReleaseMutex();
 	}
 
+	// Carousel autoplay functionality
 	private System.Timers.Timer _timer;
 	private readonly int autoplay_time = 5000;
 
@@ -120,8 +177,12 @@ public partial class MovieExplore : ContentPage
             int nextIndex = (current + 1) % 6;
 
             nextButton.IsEnabled = false;
+			prevButton.IsEnabled = false;
+			
 			newMovies.ScrollTo(nextIndex);
-            nextButton.IsEnabled = true;
+            
+			nextButton.IsEnabled = true;
+			prevButton.IsEnabled = true;
 
             _timer.Start();
         });
