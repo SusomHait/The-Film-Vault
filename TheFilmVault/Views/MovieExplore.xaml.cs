@@ -2,38 +2,10 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Timers;
 using System.Text.Json;
-using System.Threading;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Microsoft.Maui.Controls.Internals;
-using System.Windows.Input;
-using System.Runtime.CompilerServices;
-using Microsoft.Maui.ApplicationModel;
+using TheFilmVault.Models;
+using System.Diagnostics;
 
 namespace TheFilmVault.Views;
-
-public class CarouselItem: BindableObject, INotifyPropertyChanged
-{
-	private string? img_path;
-	private string? rating;
-	public string? movieTitle { get; set; }
-	public string? posterPath
-	{
-		get { return img_path; }
-		set
-		{
-			img_path = "https://image.tmdb.org/t/p/original" + value;
-		}
-	}
-	public string? movieDesc { get; set; }
-	public string? movieRating
-	{
-		get { return rating; }
-		set
-		{
-			rating = value + "/10";
-		}
-	}
-}
 
 public partial class MovieExplore : ContentPage
 {
@@ -41,7 +13,7 @@ public partial class MovieExplore : ContentPage
 
 	public async void loadCarousel()
 	{
-        ObservableCollection<CarouselItem> cv = new ObservableCollection<CarouselItem>();
+        ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
 
         try
 		{
@@ -60,20 +32,20 @@ public partial class MovieExplore : ContentPage
 				foreach (JsonElement movie in nowPlaying.EnumerateArray())
 				{
 					if (count > 5) break;
+					long id = movie.GetProperty("id").GetInt64();
 					string? title = movie.GetProperty("title").GetString();
 					string? path = movie.GetProperty("backdrop_path").GetString();
 					string? desc = movie.GetProperty("overview").GetString();
 					string? rating = movie.GetProperty("vote_average").GetDouble().ToString();
 
-					Console.WriteLine("{0} {1} {2} {3}", title, path, desc, rating);
-					cv.Add(new CarouselItem { movieTitle = title, posterPath = path, movieDesc = desc, movieRating = rating });
+					cv.Add(new Movie { movieId = id, movieTitle = title, backdropPath = path, movieDesc = desc, movieRating = rating });
 					count++;
 				}
 			}
 		}
 		catch (Exception)
 		{
-            Console.WriteLine("Error in Getting Data");
+            Debug.WriteLine("Error in Getting Data");
         }
 
 		newMovies.ItemsSource = cv;

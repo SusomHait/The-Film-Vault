@@ -5,6 +5,7 @@
              Title="MovieExplore" BackgroundColor="#151515">
 
     <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+        <!-- Start Background Definition -->
         <Label Text="Movies" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
         <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
 
@@ -24,15 +25,22 @@
             <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
         </Grid>
 
+        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+        <!-- End Background Definition -->
+
+        <!-- Start Primary Functionality -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*,4,300" Margin="150,50">
+            <!-- Carousel/Genre list divider -->
             <BoxView BackgroundColor="White" Grid.Column="2"/>
+            
+            <!-- Create New Movie Carousel -->
             <Border Grid.ColumnSpan="2" BackgroundColor="#151515" StrokeThickness="0" Margin="10,0">
                 <CarouselView x:Name="newMovies" PeekAreaInsets="0" IsSwipeEnabled="False">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Border>
                                 <Grid>
-                                    <Image Source="{Binding posterPath}" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Source="{Binding backdropPath}" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <Border HorizontalOptions="Fill" VerticalOptions="End" Stroke="#151515" StrokeThickness="0">
                                         <Grid>
                                             <Grid.Background>
@@ -63,8 +71,12 @@
                     </CarouselView.ItemTemplate>
                 </CarouselView>
             </Border>
+            
+            <!-- Define Carousel Navigation -->
             <Button Text=">" x:Name="prevButton" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="#15151500" BorderColor="White" BorderWidth="1" CornerRadius="0" Grid.Column="1" Margin="10,0" Clicked="goRight"/>
             <Button Text="&lt;" x:Name="nextButton" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="#15151500" BorderColor="White" BorderWidth="1" CornerRadius="0" Margin="10,0" Clicked="goLeft"/>
+            
+            <!-- Define Genre Selector -->
             <Border Grid.Column="3">
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
                     <Button Text="Action" TextColor="White" BackgroundColor="#151515" HorizontalOptions="Fill" VerticalOptions="Center"/>
@@ -78,7 +90,7 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
+        <!-- End Primary Functionality -->
         
-        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
     </Grid>
 </ContentPage>
