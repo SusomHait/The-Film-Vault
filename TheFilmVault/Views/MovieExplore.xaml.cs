@@ -9,7 +9,7 @@ namespace TheFilmVault.Views;
 
 public partial class MovieExplore : ContentPage
 {
-	// init app functions through main
+	// init app functions through class constructor
     public MovieExplore()
     {
         InitializeComponent();

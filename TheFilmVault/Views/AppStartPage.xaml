@@ -61,9 +61,9 @@
                 <Label Text="The Film Vault" TextColor="White" HorizontalOptions="Center" FontSize="72" FontFamily="CourierBold"/>
                 <Entry Placeholder="Search for a movie..." BackgroundColor="White"/>
                 <Grid ColumnDefinitions="*,*,*">
-                    <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-                    <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-                    <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+                    <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="goMovies"/>
+                    <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="goWatchlist"/>
+                    <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="goAccount"/>
                 </Grid>
             </VerticalStackLayout>
         </Border>

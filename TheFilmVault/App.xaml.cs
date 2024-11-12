@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            App.Current.MainPage = new Views.MovieExplore();
+            App.Current.MainPage = new Views.AppStartPage();
         }
     }
 }

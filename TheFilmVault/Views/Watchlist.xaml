@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TheFilmVault.Views.Watchlist"
+             Title="Watchlist" BackgroundColor="#151515">
+
+    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+        <!-- Start Background Definition -->
+        <Label Text="Watchlist" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
+
+        <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
+            <BoxView BackgroundColor="White" Grid.Column="0"/>
+            <BoxView BackgroundColor="White" Grid.Column="2"/>
+        </Grid>
+
+        <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
+            <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+            <BoxView BackgroundColor="White" Grid.Row="2"/>
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
+            <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+            <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+        </Grid>
+
+        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+        <!-- End Background Definition -->
+    </Grid>
+
+</ContentPage>
