@@ -7,24 +7,34 @@ namespace TheFilmVault.Views;
 
 public partial class GenrePage : ContentPage
 {
-	public GenrePage(Genre caller)
-	{
-		InitializeComponent();
+    private readonly HttpClient client = new HttpClient();
+    private int current_page = 1;
+    private int page_genre;
+    private ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
 
-		loadGenreOptions(caller.genreId);
+    public GenrePage(Genre caller)
+	{
+        page_genre = caller.genreId;
+        InitializeComponent();
+
+		getOptions();
         dynamicTitle.Text = $"{caller.genreName.Trim()}";
+
+        genreGrid.ItemsSource = cv;
 	}
 
-	private readonly HttpClient client = new HttpClient();
-
-    public async void loadGenreOptions(int genre_key)
+    private async void loadMore(object sender, EventArgs e)
     {
-        ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
+        current_page++;
+        if (current_page <= 500) getOptions();
+    }
 
+    public async void getOptions()
+    {
         try
         {
             var KEY = await SecureStorage.GetAsync("API_KEY");
-            string url = $"https://api.themoviedb.org/3/discover/movie?include_adult=false&language=en-US&page=1&sort_by=popularity.desc&with_genres={genre_key}";
+            string url = $"https://api.themoviedb.org/3/discover/movie?include_adult=false&language=en-US&page={current_page}&sort_by=popularity.desc&with_genres={page_genre}";
             
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
             HttpResponseMessage response = await client.GetAsync(url);
@@ -35,19 +45,19 @@ public partial class GenrePage : ContentPage
             using (JsonDocument doc = JsonDocument.Parse(json))
             {
                 var root = doc.RootElement;
+
                 var nowPlaying = root.GetProperty("results");
 
                 int count = 0;
                 foreach (JsonElement movie in nowPlaying.EnumerateArray())
                 {
-                    if (count > 5) break;
                     long id = movie.GetProperty("id").GetInt64();
                     string? title = movie.GetProperty("title").GetString();
                     string? path = movie.GetProperty("poster_path").GetString();
                     string? desc = movie.GetProperty("overview").GetString();
                     string? rating = movie.GetProperty("vote_average").GetDouble().ToString();
 
-                    cv.Add(new Movie { movieId = id, movieTitle = title, backdropPath = path, movieDesc = desc, movieRating = rating });
+                    cv.Add(new Movie { movieId = id, movieTitle = title, posterPath = path, movieDesc = desc, movieRating = rating });
                     count++;
                 }
             }
@@ -56,6 +66,5 @@ public partial class GenrePage : ContentPage
         {
             Debug.WriteLine("Error in Getting Data");
         }
-        genreGrid.ItemsSource = cv;
     }
 }

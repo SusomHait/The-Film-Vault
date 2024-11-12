@@ -29,25 +29,35 @@
         <!-- End Background Definition -->
 
         <Grid Grid.Row="1">
-            <CollectionView x:Name="genreGrid" Margin="150,0">
+            <CollectionView x:Name="genreGrid" Margin="150,40,150,25" ItemsUpdatingScrollMode="KeepScrollOffset">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="20" HorizontalItemSpacing="20"/>
+                    <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20" HorizontalItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout>
                             <Frame>
                                 <Grid RowDefinitions="*,2*">
                                     <VerticalStackLayout>
-                                        <ImageButton Source="{Binding backdropPath}"/>
-                                        <Label Text="{Binding movieName}"/>
-                                        <Label Text="{Binding movieRating}"/>
+                                        <Grid>
+                                            <VerticalStackLayout>
+                                                <Label Text="{Binding movieTitle}" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                                                <Button Text="See More" TextColor="Black" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                            </VerticalStackLayout>
+                                            <ImageButton Source="{Binding posterPath}" Aspect="AspectFill"/>
+                                        </Grid>
+                                        <Label Text="{Binding movieRating}" Margin="5,0"/>
                                     </VerticalStackLayout>
                                 </Grid>
                             </Frame>
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                
+                <CollectionView.Footer>
+                    <Button Text="Load More" TextColor="White" FontSize="15" BackgroundColor="#151515" VerticalOptions="Center" HorizontalOptions="Center" Clicked="loadMore"/>
+                </CollectionView.Footer>
             </CollectionView>
         </Grid>
     </Grid>

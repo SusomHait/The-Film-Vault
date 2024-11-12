@@ -14,8 +14,8 @@ public partial class MovieExplore : ContentPage
     {
         InitializeComponent();
         loadCarousel();
-
         loadGenres();
+        
         goGenrePage = new Command<Genre>(openGenrePage);
         BindingContext = this;
 
@@ -71,7 +71,6 @@ public partial class MovieExplore : ContentPage
     }
 
     // API calls for carousel content
-
     public async void loadCarousel()
     {
         ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
@@ -94,7 +93,7 @@ public partial class MovieExplore : ContentPage
                 int count = 0;
                 foreach (JsonElement movie in nowPlaying.EnumerateArray())
                 {
-                    if (count > 5) break;
+                    if (count >= 6) break;
                     long id = movie.GetProperty("id").GetInt64();
                     string? title = movie.GetProperty("title").GetString();
                     string? path = movie.GetProperty("backdrop_path").GetString();
@@ -115,7 +114,6 @@ public partial class MovieExplore : ContentPage
     }
 
     // Carousel control features
-
     private async void goRight(object sender, EventArgs e)
     {
 		int current = newMovies.Position;
