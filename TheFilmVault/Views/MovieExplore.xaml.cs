@@ -27,7 +27,7 @@ public partial class MovieExplore : ContentPage
 
     private void openGenrePage(Genre calling_genre)
     {
-        App.Current.MainPage = new Views.AppStartPage();
+        App.Current.MainPage = new Views.GenrePage(calling_genre);
     }
 
     // API call client

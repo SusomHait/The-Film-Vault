@@ -44,7 +44,7 @@
                         <DataTemplate>
                             <Border Stroke="White" StrokeThickness="1">
                                 <Grid>
-                                    <Image Source="{Binding backdropPath}" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <ImageButton Source="{Binding backdropPath}" Aspect="AspectFill" IsOpaque="True" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <Border HorizontalOptions="Fill" VerticalOptions="End" Stroke="#151515" StrokeThickness="0">
                                         <Grid>
                                             <Grid.Background>
