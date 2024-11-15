@@ -1,161 +1,80 @@
-using System.Collections.ObjectModel;
 using System.Timers;
 using System.Windows.Input;
-using System.Text.Json;
 using TheFilmVault.Models;
-using System.Diagnostics;
 
 namespace TheFilmVault.Views;
 
 public partial class MovieExplore : ContentPage
 {
-	// init app functions through class constructor
+    public ICommand goGenrePage { get; }
+    private readonly int carousel_count = 10;
+
+    // init app functions through class constructor
     public MovieExplore()
     {
         InitializeComponent();
-        loadCarousel();
-        loadGenres();
-        
+        loadPageElements();
+        initTimer();
+
         goGenrePage = new Command<Genre>(openGenrePage);
         BindingContext = this;
+    }
 
-        initTimer();
+    public async void loadPageElements()
+    {
+        APIs.movies.Clear();
+        await APIs.getMovieData("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1", carousel_count);
+        newMovies.ItemsSource = APIs.movies;
+
+        APIs.genres.Clear();
+        await APIs.getGenreList();
+        genreList.ItemsSource = APIs.genres;
     }
 
     // navigation to genre pages
-    public ICommand goGenrePage { get; }
-
     private void openGenrePage(Genre calling_genre)
     {
         App.Current.MainPage = new Views.GenrePage(calling_genre);
     }
 
-    // API call client
-    private readonly HttpClient client = new HttpClient();
-
-    // API calls for genre options 
-    public async void loadGenres()
-	{
-        ObservableCollection<Genre> g = new ObservableCollection<Genre>();
-
-        try
-        {
-            var KEY = await SecureStorage.GetAsync("API_KEY");
-
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
-            HttpResponseMessage response = await client.GetAsync("https://api.themoviedb.org/3/genre/movie/list?language=en");
-            response.EnsureSuccessStatusCode();
-
-            string json = await response.Content.ReadAsStringAsync();
-
-            using (JsonDocument doc = JsonDocument.Parse(json))
-            {
-                var root = doc.RootElement;
-                var options = root.GetProperty("genres");
-
-                foreach (JsonElement element in options.EnumerateArray())
-                {
-                    int id = element.GetProperty("id").GetInt32();
-                    string? genre_name = element.GetProperty("name").GetString();
-
-					g.Add(new Genre { genreId = id, genreName = genre_name });
-                }
-            }
-        }
-        catch (Exception)
-        {
-            Debug.WriteLine("Error in Getting Data");
-        }
-
-		genreList.ItemsSource = g;
-    }
-
-    // API calls for carousel content
-    public async void loadCarousel()
-    {
-        ObservableCollection<Movie> cv = new ObservableCollection<Movie>();
-
-        try
-        {
-            var KEY = await SecureStorage.GetAsync("API_KEY");
-
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
-            HttpResponseMessage response = await client.GetAsync("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
-            response.EnsureSuccessStatusCode();
-
-            string json = await response.Content.ReadAsStringAsync();
-
-            using (JsonDocument doc = JsonDocument.Parse(json))
-            {
-                var root = doc.RootElement;
-                var nowPlaying = root.GetProperty("results");
-
-                int count = 0;
-                foreach (JsonElement movie in nowPlaying.EnumerateArray())
-                {
-                    if (count >= 6) break;
-                    long id = movie.GetProperty("id").GetInt64();
-                    string? title = movie.GetProperty("title").GetString();
-                    string? path = movie.GetProperty("backdrop_path").GetString();
-                    string? desc = movie.GetProperty("overview").GetString();
-                    string? rating = movie.GetProperty("vote_average").GetDouble().ToString();
-
-                    cv.Add(new Movie { movieId = id, movieTitle = title, backdropPath = path, movieDesc = desc, movieRating = rating });
-                    count++;
-                }
-            }
-        }
-        catch (Exception)
-        {
-            Debug.WriteLine("Error in Getting Data");
-        }
-
-        newMovies.ItemsSource = cv;
-    }
-
     // Carousel control features
-    private async void goRight(object sender, EventArgs e)
-    {
-		int current = newMovies.Position;
-		int nextIndex = (current + 1) % 6;
+    private void goRight(object sender, EventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(true)); }
 
-		nextButton.IsEnabled = false;
-		resetTimer();
-        await asyncScroll(nextIndex);
-		nextButton.IsEnabled = true;
-    }
-
-    private async void goLeft(object sender, EventArgs e)
-    {
-        int current = newMovies.Position;
-		
-		if (current > 0)
-		{
-			prevButton.IsEnabled = false;
-			resetTimer();
-            await asyncScroll(current - 1);
-            prevButton.IsEnabled = true;
-        }
-    }
+    private void goLeft(object sender, EventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(false)); }
 	
 	public static Mutex m = new Mutex();
-	private async Task asyncScroll(int pos)
+	private void scroll(bool direction)
 	{
 		m.WaitOne();
-		if (pos >= 0 && pos <= 5)
+        int current = newMovies.Position;
+        int nextIndex;
+
+        if (direction) nextIndex = (current + 1) % carousel_count; 
+        else
+        {
+            if (current > 0) nextIndex = current - 1;
+            else nextIndex = -1;
+        }
+
+		if (nextIndex >= 0 && nextIndex <= carousel_count - 1)
 		{
-			newMovies.ScrollTo(pos);
+            prevButton.IsEnabled = false;
+            nextButton.IsEnabled = false;
+
+            resetTimer();
+			newMovies.ScrollTo(nextIndex);
+
+            prevButton.IsEnabled = true;
+            nextButton.IsEnabled = true;
 		}
 		m.ReleaseMutex();
 	}
 
-	// Carousel autoplay functionality
-	private System.Timers.Timer _timer;
-	private readonly int autoplay_time = 5000;
+    // Carousel autoplay functionality
+    private System.Timers.Timer _timer = new System.Timers.Timer(5000);
 
     private void initTimer()
 	{
-		_timer = new System.Timers.Timer(autoplay_time);
 		_timer.Elapsed += OnTimerElapsed;
 		_timer.AutoReset = false;
 		_timer.Start();
@@ -167,24 +86,7 @@ public partial class MovieExplore : ContentPage
         _timer.Start();
     }
 
-    private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            int current = newMovies.Position;
-            int nextIndex = (current + 1) % 6;
-
-            nextButton.IsEnabled = false;
-			prevButton.IsEnabled = false;
-			
-			newMovies.ScrollTo(nextIndex);
-            
-			nextButton.IsEnabled = true;
-			prevButton.IsEnabled = true;
-
-            _timer.Start();
-        });
-    }
+    private void OnTimerElapsed(object sender, ElapsedEventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(true)); }
 
     protected override void OnDisappearing()
 	{
