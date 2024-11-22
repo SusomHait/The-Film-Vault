@@ -7,6 +7,8 @@
             InitializeComponent();
 
             App.Current.MainPage = new Views.AppStartPage();
+
+
         }
     }
 }
