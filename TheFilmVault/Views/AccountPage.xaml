@@ -4,29 +4,393 @@
              x:Class="TheFilmVault.Views.AccountPage"
              Title="AccountPage" BackgroundColor="#151515">
 
-    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+    <Grid RowDefinitions="50,*,75" Padding="0,10,0,0">
         <!-- Start Background Definition -->
-        <Label Text="Account" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
-
         <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
+
             <BoxView BackgroundColor="White" Grid.Column="0"/>
+
             <BoxView BackgroundColor="White" Grid.Column="2"/>
         </Grid>
 
         <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
+
             <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+
             <BoxView BackgroundColor="White" Grid.Row="2"/>
+
         </Grid>
 
         <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
+
             <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+
             <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+
             <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+
         </Grid>
 
         <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
         <!-- End Background Definition -->
+
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" Margin="150,50">
+
+            <!-- Username Label -->
+            <Label Text=" USERNAME"
+                   
+           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
+                   
+           TextColor="White"
+                   
+           FontAttributes="Bold"
+                   
+           VerticalOptions="Start"
+                   
+           HorizontalOptions="Start"
+                   
+           Padding="0,0,0,1" />
+
+            <!-- Username Display -->
+            <Label Text="JohnDoe123"
+                   
+           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1"
+                   
+           TextColor="#151515"
+                   
+           BackgroundColor="White"
+                   
+           VerticalOptions="Center"
+                   
+           HorizontalOptions="Start"
+                   
+           Padding="3,0,0,0"
+                   
+           WidthRequest="110"
+                   
+           HeightRequest="20" />
+
+            <!-- Password Label -->
+            <Label Text=" PASSWORD"
+                   
+           Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"
+                   
+           TextColor="White"
+                   
+           FontAttributes="Bold"
+                   
+           VerticalOptions="Center"
+                   
+           HorizontalOptions="Start"
+                   
+           Padding="3,0,0,0" />
+
+            <!-- Password Display Label (Display "********") -->
+            <Label Text="********"
+                   
+           Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1"
+                   
+           TextColor="#151515"
+                   
+           BackgroundColor="White"
+                   
+           VerticalOptions="Center"
+                   
+           HorizontalOptions="Start"
+                   
+           Padding="10,2,0,0"
+                   
+           WidthRequest="110"
+                   
+           HeightRequest="25" />
+
+            <Label Text=" Dark"
+                   
+           Grid.Row="4" Grid.Column="0"
+                   
+           TextColor="White"
+                   
+           FontAttributes="Bold"
+                   
+           VerticalOptions="Center"
+                   
+           HorizontalOptions="Start"
+                   
+           Padding="0,0,0,1" />
+
+            <!-- Dark Mode Toggle -->
+            <Switch x:Name="DarkModeSwitch"
+                    
+            Grid.Row="4" Grid.Column="1"
+                    
+            OnColor="#4CAF50"
+                    
+            ThumbColor="#ffffff"
+                    
+            VerticalOptions="Center"
+                    
+            HorizontalOptions="Start"
+                    
+            IsToggled="false"
+                    
+            WidthRequest="15"
+                    
+            HeightRequest="10" />
+
+            <!-- Mature Content Label -->
+            <Label Text=" Content"
+                   
+           Grid.Row="5" Grid.Column="0"
+                   
+           TextColor="White"
+                   
+           FontAttributes="Bold"
+                   
+           VerticalOptions="Center"
+                   
+           HorizontalOptions="Start"
+                   
+           Padding="0,0,0,0" />
+
+            <!-- Mature Content Toggle -->
+            <Switch x:Name="MatureContentSwitch"
+                    
+            Grid.Row="5" Grid.Column="1"
+                    
+            OnColor="#4CAF50"
+                    
+            ThumbColor="#ffffff"
+                    
+            VerticalOptions="Center"
+                    
+            HorizontalOptions="Start"
+                    
+            IsToggled="false"
+                   
+            WidthRequest="15"
+                    
+            HeightRequest="15" />
+
+            <Grid Grid.Row="0" Grid.Column="2" HeightRequest="0" Grid.ColumnSpan="1"
+                  
+              VerticalOptions="Start" 
+                  
+              HorizontalOptions="Center" 
+                  
+              Margin="10,-2,105,5"
+                  
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                  
+              BackgroundColor="#151515"
+                  
+                  >
+
+                <!-- Statistics Title -->
+                <Label Text="  STATISTICS"
+                       
+                   TextColor="White"
+                       
+                   FontAttributes="Bold"
+                       
+                   VerticalOptions="Start"
+                       
+                   HorizontalOptions="Start"
+                       
+                   Padding="0,0,0,0" />
+
+                <!-- Date Joined -->
+                <BoxView Grid.Row="1"
+                         
+             Color="White"
+                         
+             HeightRequest="1"
+                         
+             HorizontalOptions="FillAndExpand" 
+                         
+             VerticalOptions="Center" />
+
+                <Label Text=" Date Joined:"
+                       
+           Grid.Row="2"
+                       
+           TextColor="#151515"
+                       
+           HorizontalOptions="Center"
+                       
+           VerticalOptions="Center" 
+                       
+           Margin="0,2,0,3"
+                       
+           BackgroundColor="white"
+                       
+           WidthRequest="125"
+                       
+             Padding="3,0,0,0"
+                   />
+
+                <BoxView Grid.Row="3"
+                         
+             Color="White"
+                         
+             HeightRequest="1"
+                         
+             HorizontalOptions="FillAndExpand"
+                         
+             VerticalOptions="Center"
+                         />
+
+                <!-- Date Joined Value with Border -->
+                <Label Text=" 01/01/2022"
+                       
+           Grid.Row="4"
+                       
+           TextColor="#151515"
+                       
+           HorizontalOptions="Center"
+                       
+           VerticalOptions="Center"
+                       
+            Padding="9,5,0,5"
+                       
+           BackgroundColor="White"
+                       
+           Margin="0,2,0,2"
+                       
+                       WidthRequest="125"/>
+
+                <!-- Hours Watched Label with Border -->
+                <BoxView Grid.Row="5"
+                         
+             Color="White"
+                         
+             HeightRequest="1"
+                         
+             HorizontalOptions="FillAndExpand"
+                         
+             VerticalOptions="Center" 
+                         
+              BackgroundColor="White"/>
+
+                <Label Text="Hours Watched:"
+                       
+           Grid.Row="6"
+                       
+           TextColor="#151515"
+                       
+           HorizontalOptions="StartAndExpand"
+                       
+           VerticalOptions="Center"
+                       
+           Margin="0,3,0,3" 
+                       
+              Padding="6,0,0,0"
+                       WidthRequest="125"
+                       
+                       BackgroundColor="White"/>
+
+                <BoxView Grid.Row="7"
+                         
+             Color="White"
+                         
+             HeightRequest="1"
+                         
+             HorizontalOptions="FillAndExpand"
+                         
+             VerticalOptions="Center" />
+
+                <!-- Hours Watched Value with Border -->
+                <Label Text="  120"
+                       
+           Grid.Row="8"
+                       
+           TextColor="#151515"
+                       
+           HorizontalOptions="CenterAndExpand"
+                       
+           VerticalOptions="Center"
+                       
+           Padding="2,0,75,10"
+                       
+           BackgroundColor="White"
+                       
+           Margin="0,4,0,0" 
+                       
+           WidthRequest="125"/>
+
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1"
+                 
+          RowDefinitions="Auto,Auto,Auto" 
+                  
+          ColumnDefinitions="Auto,Auto,Auto,Auto" 
+                  
+          Margin="130,0,0,0"
+           
+           Padding="0,0,0,0"
+                  
+          HeightRequest="0"
+                  
+          BackgroundColor="white">
+
+                <!-- Movie Image with Border -->
+                <Border Grid.Row="0" 
+                        
+                VerticalOptions="Center"
+                        
+                HorizontalOptions="EndAndExpand"
+                        
+                Padding="10,50,125,40"
+                        
+                Margin="115,0,0,0"
+                        
+                BackgroundColor="white">
+                    
+                    <Image Source="movie_poster_placeholder.png"
+                           
+                   Aspect="AspectFill"
+                           
+                   VerticalOptions="FillAndExpand"
+                           
+                   HorizontalOptions="EndAndExpand" 
+                    
+                           />
+                </Border>
+
+                <!-- Movie Title -->
+                <Label Text="Movie Title"
+                       
+               Grid.Row="1"
+                       
+               TextColor="White"
+                       
+               FontAttributes="Bold"
+                       
+               HorizontalOptions="Center"
+                       
+               VerticalOptions="Start"
+                       
+               Margin="60,0,0,0"
+                       
+                       FontSize="12"/>
+
+                <!-- Movie Rating -->
+                <Label Text="⭐ 4.5/5"
+                       
+               Grid.Row="2"
+                       
+               TextColor="Yellow"
+                       
+               HorizontalOptions="Start"
+                       
+               VerticalOptions="Start"
+                       
+               Margin="150,0,0,0" />
+                
+            </Grid>
+          
+        </Grid>
         
     </Grid>
+
 </ContentPage>

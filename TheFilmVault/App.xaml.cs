@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            App.Current.MainPage = new Views.AppStartPage();
+            App.Current.MainPage = new Views.AccountPage();
         }
     }
 }
