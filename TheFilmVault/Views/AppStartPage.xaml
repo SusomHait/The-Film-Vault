@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.AppStartPage"
-             Title="AppStartPage" BackgroundColor="#151515">
+             Title="AppStartPage" BackgroundColor="#151515" x:Name="appStartPage">
 
     <Grid>
         <Grid Padding="100,75">
@@ -80,7 +80,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Button BackgroundColor="White" TextColor="#151515" Text="{Binding movieTitle}" CornerRadius="0"/>
+                            <Button BackgroundColor="White" TextColor="#151515" Text="{Binding movieTitle}" CornerRadius="0" Command="{Binding Source={x:Reference appStartPage}, Path=BindingContext.goMovieView}" CommandParameter="{Binding .}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

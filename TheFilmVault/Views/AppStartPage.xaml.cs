@@ -1,15 +1,21 @@
+using System.Windows.Input;
 using TheFilmVault.Models;
 
 namespace TheFilmVault.Views;
 
 public partial class AppStartPage : ContentPage
 {
+    public ICommand goMovieView { get; }
+
 	public AppStartPage()
 	{
 		InitializeComponent();
         
         APIs.movies.Clear();
         moviesOptions.ItemsSource = APIs.movies;
+        
+        goMovieView = new Command<Movie>(openMoviePage);
+        BindingContext = this;
 	}
 
     // Search Bar Functionality
@@ -42,6 +48,12 @@ public partial class AppStartPage : ContentPage
         searchGrid.IsVisible = false;
         focusButton.IsVisible = false;
         moviesOptions.IsVisible = false;
+    }
+
+    // navigate to search bar selection
+    private void openMoviePage(Movie callingMovie)
+    {
+        App.Current.MainPage = new MovieView(callingMovie);
     }
 
     private void goMovies(object sender, EventArgs e) { App.Current.MainPage = new MovieExplore(); }
