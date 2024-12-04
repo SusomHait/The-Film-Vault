@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.MovieView"
-             Title="MovieView">
+             Title="MovieView"
+             BackgroundColor="#151515">
 
-    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+    <Grid RowDefinitions="75,*,75" Padding="10">
         <!-- Start Background Definition -->
         <Label Text="Movies" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
         <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
@@ -20,12 +21,37 @@
         </Grid>
 
         <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-            <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+            <Button Text="- ACCOUNT -" BackgroundColor="#151515" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+            <Button Text="- HOME -" BackgroundColor="#151515" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+            <Button Text="- WATCHLIST -" BackgroundColor="#151515" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
         </Grid>
 
         <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
         <!-- End Background Definition -->
+
+        <!-- Main Content Section -->
+        <Grid Grid.Row="1" ColumnDefinitions="2*,1*,1*" Padding="200,100" ColumnSpacing="20" RowDefinitions="*">
+            <!-- Movie Name and Poster -->
+            <StackLayout Grid.Column="0" Padding="20" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Label Text="Movie Name" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                <Image Source="{Binding posterPath}" Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!-- Movie Synopsis -->
+            <StackLayout Grid.Column="1" Padding="20" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid RowDefinitions="Auto,*,Auto">
+                    <Label Text="Movie Synopsis" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" Grid.Row="0" />
+                    <Label Text="{Binding movieSynopsis}" FontSize="14" TextColor="Black" LineBreakMode="WordWrap" Margin="0,10" Grid.Row="1" />
+                    <Button Text="+" FontSize="Large" WidthRequest="40" HeightRequest="40" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2"/>
+                </Grid>
+            </StackLayout>
+
+            <!-- Ratings and Other Info -->
+            <StackLayout Grid.Column="2" Padding="20" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+                <Label Text="RATINGS AND OTHER INFO" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                <Label Text="{Binding movieRating}" FontSize="14" TextColor="Black" LineBreakMode="WordWrap" Margin="0,10" />
+            </StackLayout>
+    </Grid>
+
     </Grid>
 </ContentPage>

@@ -14,6 +14,8 @@ namespace TheFilmVault
             loadElements();
 
             App.Current.MainPage = new Views.AppStartPage();
+
+
         }
 
         private async void loadElements()
