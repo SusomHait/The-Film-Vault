@@ -7,28 +7,53 @@ namespace TheFilmVault.Views;
 public partial class MovieExplore : ContentPage
 {
     public ICommand goGenrePage { get; }
-    private readonly int carousel_count = 10;
 
-    // init app functions through class constructor
     public MovieExplore()
     {
         InitializeComponent();
-        loadPageElements();
-        initTimer();
+
+        newMovies.ItemsSource = App.catalog;
+        genreList.ItemsSource = APIs.genres;
+
+        APIs.movies.Clear();
+        moviesOptions.ItemsSource = APIs.movies;
 
         goGenrePage = new Command<Genre>(openGenrePage);
         BindingContext = this;
+
+        initTimer();
     }
 
-    public async void loadPageElements()
+    // Search Bar Functionality
+    private async void searchOptions(string input)
     {
         APIs.movies.Clear();
-        await APIs.getMovieData("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1", carousel_count);
-        newMovies.ItemsSource = APIs.movies;
+        await APIs.getMovieData($"https://api.themoviedb.org/3/search/movie?query={input}&include_adult=false&language=en-US&page=1");
+    }
 
-        APIs.genres.Clear();
-        await APIs.getGenreList();
-        genreList.ItemsSource = APIs.genres;
+    private void populateResults(object sender, TextChangedEventArgs e)
+    {
+        if (searchEntry.Text == null || searchEntry.Text.Length == 0)
+        {
+            searchGrid.IsVisible = false;
+            focusButton.IsVisible = false;
+            moviesOptions.IsVisible = false;
+        }
+        else
+        {
+            searchOptions(searchEntry.Text.Trim());
+
+            searchGrid.IsVisible = true;
+            focusButton.IsVisible = true;
+            moviesOptions.IsVisible = true;
+        }
+    }
+
+    private void removeSearchOptions(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = false;
+        focusButton.IsVisible = false;
+        moviesOptions.IsVisible = false;
     }
 
     // navigation to genre pages
@@ -49,14 +74,14 @@ public partial class MovieExplore : ContentPage
         int current = newMovies.Position;
         int nextIndex;
 
-        if (direction) nextIndex = (current + 1) % carousel_count; 
+        if (direction) nextIndex = (current + 1) % App.carousel_count; 
         else
         {
             if (current > 0) nextIndex = current - 1;
             else nextIndex = -1;
         }
 
-		if (nextIndex >= 0 && nextIndex <= carousel_count - 1)
+		if (nextIndex >= 0 && nextIndex <= App.carousel_count - 1)
 		{
             prevButton.IsEnabled = false;
             nextButton.IsEnabled = false;

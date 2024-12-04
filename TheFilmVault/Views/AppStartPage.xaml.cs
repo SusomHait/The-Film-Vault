@@ -12,6 +12,7 @@ public partial class AppStartPage : ContentPage
         moviesOptions.ItemsSource = APIs.movies;
 	}
 
+    // Search Bar Functionality
     private async void searchOptions(string input)
     {
         APIs.movies.Clear();
