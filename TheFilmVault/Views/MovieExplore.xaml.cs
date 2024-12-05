@@ -7,6 +7,7 @@ namespace TheFilmVault.Views;
 public partial class MovieExplore : ContentPage
 {
     public ICommand goGenrePage { get; }
+    public Themes pageTheme { get; set; }
 
     public MovieExplore()
     {
@@ -19,6 +20,7 @@ public partial class MovieExplore : ContentPage
         moviesOptions.ItemsSource = APIs.movies;
 
         goGenrePage = new Command<Genre>(openGenrePage);
+        pageTheme = new Themes();
         BindingContext = this;
 
         initTimer();
@@ -31,20 +33,22 @@ public partial class MovieExplore : ContentPage
         await APIs.getMovieData($"https://api.themoviedb.org/3/search/movie?query={input}&include_adult=false&language=en-US&page=1");
     }
 
+    private void startSearch(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = true;
+        searchEntry.Text = null;
+        moviesOptions.IsVisible = false;
+    }
+
     private void populateResults(object sender, TextChangedEventArgs e)
     {
         if (searchEntry.Text == null || searchEntry.Text.Length == 0)
         {
-            searchGrid.IsVisible = false;
-            focusButton.IsVisible = false;
             moviesOptions.IsVisible = false;
         }
         else
         {
             searchOptions(searchEntry.Text.Trim());
-
-            searchGrid.IsVisible = true;
-            focusButton.IsVisible = true;
             moviesOptions.IsVisible = true;
         }
     }
@@ -52,7 +56,6 @@ public partial class MovieExplore : ContentPage
     private void removeSearchOptions(object sender, EventArgs e)
     {
         searchGrid.IsVisible = false;
-        focusButton.IsVisible = false;
         moviesOptions.IsVisible = false;
     }
 
@@ -66,44 +69,44 @@ public partial class MovieExplore : ContentPage
     private void goRight(object sender, EventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(true)); }
 
     private void goLeft(object sender, EventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(false)); }
-	
-	public static Mutex m = new Mutex();
-	private void scroll(bool direction)
-	{
-		m.WaitOne();
+
+    public static Mutex m = new Mutex();
+    private void scroll(bool direction)
+    {
+        m.WaitOne();
         int current = newMovies.Position;
         int nextIndex;
 
-        if (direction) nextIndex = (current + 1) % App.carousel_count; 
+        if (direction) nextIndex = (current + 1) % App.carousel_count;
         else
         {
             if (current > 0) nextIndex = current - 1;
             else nextIndex = -1;
         }
 
-		if (nextIndex >= 0 && nextIndex <= App.carousel_count - 1)
-		{
+        if (nextIndex >= 0 && nextIndex <= App.carousel_count - 1)
+        {
             prevButton.IsEnabled = false;
             nextButton.IsEnabled = false;
 
             resetTimer();
-			newMovies.ScrollTo(nextIndex);
+            newMovies.ScrollTo(nextIndex);
 
             prevButton.IsEnabled = true;
             nextButton.IsEnabled = true;
-		}
-		m.ReleaseMutex();
-	}
+        }
+        m.ReleaseMutex();
+    }
 
     // Carousel autoplay functionality
     private System.Timers.Timer _timer = new System.Timers.Timer(5000);
 
     private void initTimer()
-	{
-		_timer.Elapsed += OnTimerElapsed;
-		_timer.AutoReset = false;
-		_timer.Start();
-	}
+    {
+        _timer.Elapsed += OnTimerElapsed;
+        _timer.AutoReset = false;
+        _timer.Start();
+    }
 
     private void resetTimer()
     {
@@ -114,10 +117,9 @@ public partial class MovieExplore : ContentPage
     private void OnTimerElapsed(object sender, ElapsedEventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(true)); }
 
     protected override void OnDisappearing()
-	{
-		_timer?.Stop();
-		_timer?.Dispose();
-		base.OnDisappearing();
-	}
-
+    {
+        _timer?.Stop();
+        _timer?.Dispose();
+        base.OnDisappearing();
+    }
 }

@@ -2,57 +2,57 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.MovieExplore"
-             Title="MovieExplore" BackgroundColor="#151515" x:Name="movieExplorePage">
+             Title="MovieExplore" BackgroundColor="{Binding pageTheme.background}" x:Name="movieExplorePage">
 
     <Grid>
         <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
             <!-- Start Background Definition -->
-            <Label Text="Movies" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label Text="Movies" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
 
             <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-                <BoxView BackgroundColor="White" Grid.Column="0"/>
-                <BoxView BackgroundColor="White" Grid.Column="2"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
             </Grid>
 
             <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-                <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-                <BoxView BackgroundColor="White" Grid.Row="2"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
             </Grid>
 
             <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-                <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-                <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-                <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+                <Button Text="- ACCOUNT -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+                <Button Text="- HOME -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+                <Button Text="- WATCHLIST -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
             </Grid>
 
-            <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
             <!-- End Background Definition -->
 
             <!-- Start Primary Functionality -->
             <Grid Grid.Row="1" RowDefinitions="30,*" ColumnDefinitions="*,*,4,300" Margin="150,50">
                 <!-- Carousel/Genre list divider -->
-                <BoxView BackgroundColor="White" Grid.Column="2" Grid.RowSpan="2"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2" Grid.RowSpan="2"/>
 
                 <!-- Element Headers -->
-                <Label Text="Recently Released" TextColor="White" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2" Margin="0,0,0,10"/>
-                <Label Text="Genres" TextColor="White" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" Margin="0,0,0,10"/>
+                <Label Text="Recently Released" TextColor="{Binding pageTheme.accent}" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2" Margin="0,0,0,10"/>
+                <Label Text="Genres" TextColor="{Binding pageTheme.accent}" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" Margin="0,0,0,10"/>
 
                 <!-- Create New Movie Carousel -->
-                <Border Grid.ColumnSpan="2" Grid.Row="1" BackgroundColor="#15151500" StrokeThickness="0" Margin="10,0">
+                <Border Grid.ColumnSpan="2" Grid.Row="1" BackgroundColor="Transparent" Margin="10,0">
                     <CarouselView x:Name="newMovies" PeekAreaInsets="0" IsSwipeEnabled="False" IndicatorView="newMovieDots">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <Border Stroke="White" StrokeThickness="1">
                                     <Grid>
-                                        <Label Text="Image Loading" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label Text="Image Loading" TextColor="{Binding Source={x:Reference movieExplorePage}, Path=BindingContext.pageTheme.accent}" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         <ImageButton Source="{Binding backdropPath}" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        <Border HorizontalOptions="Fill" VerticalOptions="End" Stroke="#151515" StrokeThickness="0">
+                                        <Border HorizontalOptions="Fill" VerticalOptions="End" Stroke="Transparent">
                                             <Grid>
                                                 <Grid.Background>
                                                     <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                                                        <GradientStop Color="#15151500" Offset="0.0"/>
-                                                        <GradientStop Color="#151515" Offset="0.5"/>
-                                                        <GradientStop Color="#15151500" Offset="1.0"/>
+                                                        <GradientStop Color="Transparent" Offset="0.0"/>
+                                                        <GradientStop Color="Black" Offset="0.5"/>
+                                                        <GradientStop Color="Transparent" Offset="1.0"/>
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
                                                 <Label Text="{Binding movieTitle}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,20,0,20"/>
@@ -62,9 +62,9 @@
                                             <Grid>
                                                 <Grid.Background>
                                                     <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                                                        <GradientStop Color="#15151500" Offset="0.0"/>
-                                                        <GradientStop Color="#151515" Offset="0.5"/>
-                                                        <GradientStop Color="#15151500" Offset="1.0"/>
+                                                        <GradientStop Color="Transparent" Offset="0.0"/>
+                                                        <GradientStop Color="Black" Offset="0.5"/>
+                                                        <GradientStop Color="Transparent" Offset="1.0"/>
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
                                                 <Label Text="{Binding movieRating}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="20"/>
@@ -77,19 +77,19 @@
                     </CarouselView>
                 </Border>
 
-                <IndicatorView x:Name="newMovieDots" VerticalOptions="Start" HorizontalOptions="End" Grid.Row="1" Grid.ColumnSpan="2" IndicatorColor="White" SelectedIndicatorColor="#f3c045" Margin="20"/>
+                <IndicatorView x:Name="newMovieDots" VerticalOptions="Start" HorizontalOptions="End" Grid.Row="1" Grid.ColumnSpan="2" IndicatorColor="White" SelectedIndicatorColor="{Binding pageTheme.highlight}" Margin="20"/>
 
                 <!-- Define Carousel Navigation -->
-                <Button Text=">" x:Name="prevButton" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="#15151500" BorderColor="White" BorderWidth="1" CornerRadius="0" Grid.Column="1" Grid.Row="1" Margin="10,0" Clicked="goRight"/>
-                <Button Text="&lt;" x:Name="nextButton" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="#15151500" BorderColor="White" BorderWidth="1" CornerRadius="0" Grid.Row="1" Margin="10,0" Clicked="goLeft"/>
+                <Button Text=">" x:Name="prevButton" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" BorderWidth="1" CornerRadius="0" Grid.Column="1" Grid.Row="1" Margin="10,0" Clicked="goRight"/>
+                <Button Text="&lt;" x:Name="nextButton" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" BorderWidth="1" CornerRadius="0" Grid.Row="1" Margin="10,0" Clicked="goLeft"/>
 
                 <!-- Define Genre Selector -->
-                <Border Grid.Column="3" Padding="10,0" Grid.Row="1" Stroke="#15151500">
-                    <ListView x:Name="genreList" VerticalOptions="Fill" VerticalScrollBarVisibility="Always" BackgroundColor="DarkGray">
+                <Border Grid.Column="3" Padding="10,0" Grid.Row="1" Stroke="Transparent">
+                    <ListView x:Name="genreList" VerticalOptions="Fill" VerticalScrollBarVisibility="Always" BackgroundColor="Transparent">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Button Text="{Binding genreName}" TextColor="White" BackgroundColor="#151515" CornerRadius="0" Margin="5,0" Command="{Binding Source={x:Reference movieExplorePage}, Path=BindingContext.goGenrePage}" CommandParameter="{Binding .}"/>
+                                    <Button Text="{Binding genreName}" TextColor="{Binding Source={x:Reference movieExplorePage}, Path=BindingContext.pageTheme.accent}" BackgroundColor="{Binding Source={x:Reference movieExplorePage}, Path=BindingContext.pageTheme.background}" CornerRadius="0" Margin="5,0" Command="{Binding Source={x:Reference movieExplorePage}, Path=BindingContext.goGenrePage}" CommandParameter="{Binding .}"/>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -99,26 +99,33 @@
             <!-- End Primary Functionality -->
         </Grid>
 
-        <!-- Handle Search Output -->
-        <Grid x:Name="searchGrid" IsVisible="False">
+        <!-- Define Search Button-->
+        <Grid Margin="50,27,50,100" VerticalOptions="Start" HorizontalOptions="Start">
+            <HorizontalStackLayout>
+                <Label Text="&#x26B2;" TextColor="{Binding pageTheme.highlight}" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center" Rotation="45"/>
+                <Label Text="|Search" TextColor="{Binding pageTheme.highlight}" FontSize="15" VerticalOptions="Center" Margin="7,1,2,7"/>
+            </HorizontalStackLayout>
+            <Button VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="startSearch"/>
+        </Grid>
+        
+        <!-- Handle Search Output - Layered Above Everything -->
+        <Grid RowDefinitions="75,*,100" ColumnDefinitions="150,*,150" x:Name="searchGrid" IsVisible="False">
             <!-- Handle User Clicking Off Search Bar -->
-            <Button x:Name="focusButton" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" IsVisible="True" Clicked="removeSearchOptions"/>
+            <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
+
+            <!-- Define Search Bar -->
+            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
 
             <!-- Query and Display Search Results -->
-            <ListView x:Name="moviesOptions" IsVisible="False" VerticalOptions="Start" HorizontalOptions="End" Margin="0,75,100,100" MaximumWidthRequest="300">
+            <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Button BackgroundColor="White" TextColor="#151515" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0"/>
+                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </Grid>
-
-        <!-- Define Search Bar On Top of All Elements-->
-        <Grid Margin="0,25,100,100" VerticalOptions="Start" HorizontalOptions="End">
-            <SearchBar x:Name="searchEntry" Placeholder="Search..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Start" HorizontalOptions="Fill" WidthRequest="300"/>
         </Grid>
     </Grid>
 </ContentPage>
