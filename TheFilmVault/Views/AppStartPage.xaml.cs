@@ -6,8 +6,10 @@ namespace TheFilmVault.Views;
 public partial class AppStartPage : ContentPage
 {
     public ICommand goMovieView { get; }
+    public Themes pageTheme { get; set; }
 
-	public AppStartPage()
+
+    public AppStartPage()
 	{
 		InitializeComponent();
         
@@ -15,6 +17,7 @@ public partial class AppStartPage : ContentPage
         moviesOptions.ItemsSource = APIs.movies;
         
         goMovieView = new Command<Movie>(openMoviePage);
+        pageTheme = new Themes();
         BindingContext = this;
 	}
 

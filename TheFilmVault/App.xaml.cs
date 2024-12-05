@@ -13,6 +13,12 @@ namespace TheFilmVault
             InitializeComponent();
             loadElements();
 
+            // init theme if it doesn't exist
+            if (!Preferences.Default.ContainsKey("theme"))
+            {
+                Preferences.Default.Set("theme", "dark");
+            }
+
             App.Current.MainPage = new Views.AppStartPage();
         }
 
