@@ -7,6 +7,7 @@ namespace TheFilmVault.Views;
 public partial class MovieExplore : ContentPage
 {
     public ICommand goGenrePage { get; }
+    public ICommand goMoviePage { get; }
     public Themes pageTheme { get; set; }
 
     public MovieExplore()
@@ -20,6 +21,8 @@ public partial class MovieExplore : ContentPage
         moviesOptions.ItemsSource = APIs.movies;
 
         goGenrePage = new Command<Genre>(openGenrePage);
+        goMoviePage = new Command<Movie>(openMoviePage);
+
         pageTheme = new Themes();
         BindingContext = this;
 
@@ -62,7 +65,12 @@ public partial class MovieExplore : ContentPage
     // navigation to genre pages
     private void openGenrePage(Genre calling_genre)
     {
-        App.Current.MainPage = new Views.GenrePage(calling_genre);
+        App.Current.MainPage = new GenrePage(calling_genre);
+    }
+
+    private void openMoviePage(Movie calling_movie)
+    {
+        App.Current.MainPage = new MovieView(calling_movie);
     }
 
     // Carousel control features

@@ -4,52 +4,99 @@
              x:Class="TheFilmVault.Views.MovieView"
              Title="MovieView" BackgroundColor="#151515">
 
-    <Grid RowDefinitions="75,*,75" Padding="10">
-        <!-- Start Background Definition -->
-        <Label Text="Movies" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
+    <Grid>
+        <Grid RowDefinitions="75,*,75" Padding="10">
+            <!-- Start Background Definition -->
+            <Label Text="Movies" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-            <BoxView BackgroundColor="White" Grid.Column="0"/>
-            <BoxView BackgroundColor="White" Grid.Column="2"/>
-        </Grid>
+            <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
+            </Grid>
 
-        <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-            <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-            <BoxView BackgroundColor="White" Grid.Row="2"/>
-        </Grid>
+            <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
+            </Grid>
 
-        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-            <Button Text="- ACCOUNT -" BackgroundColor="#151515" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-            <Button Text="- HOME -" BackgroundColor="#151515" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
-        </Grid>
+            <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
+                <Button Text="- ACCOUNT -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+                <Button Text="- HOME -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+                <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+            </Grid>
 
-        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
-        <!-- End Background Definition -->
+            <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <!-- End Background Definition -->
 
-        <!-- Main Content Section -->
-        <Grid Grid.Row="1" ColumnDefinitions="2*,1*,1*" Padding="200,100" ColumnSpacing="20" RowDefinitions="*">
-            <!-- Movie Name and Poster -->
-            <StackLayout Grid.Column="0" Padding="20" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Label Text="Movie Name" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                <Image Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="IMG" />
-            </StackLayout>
+            <!-- Main Content Section -->
+            <Grid Grid.Row="1" ColumnDefinitions="2*,*,*" ColumnSpacing="20" RowDefinitions="*" Margin="150,40,150,25">
+                <!-- Movie Name and Poster -->
+                <HorizontalStackLayout VerticalOptions="Fill" HorizontalOptions="Fill" Grid.ColumnSpan="3">
+                    <Grid HorizontalOptions="Start" VerticalOptions="Fill">
+                        <Image Source="{Binding current.backdropPath}" Aspect="AspectFit" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                    </Grid>
+                    <Label Text="{Binding current.movieDesc}" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
 
-            <!-- Movie Synopsis -->
-            <StackLayout Grid.Column="1" Padding="20" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Grid RowDefinitions="Auto,*,Auto">
-                    <Label Text="Movie Synopsis" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" Grid.Row="0" />
-                    <Label FontSize="14" TextColor="Black" LineBreakMode="WordWrap" Margin="0,10" Grid.Row="1" x:Name="DESC" />
-                    <Button Text="+" FontSize="Large" WidthRequest="40" HeightRequest="40" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2"/>
+                </HorizontalStackLayout>
+                
+                <Grid Grid.Column="0" IsVisible="False">
+                    <Image Source="{Binding current.posterPath}"  Aspect="AspectFit" x:Name="IMG" />
+                    <Grid VerticalOptions="Start" HorizontalOptions="Fill">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                <GradientStop Color="Transparent" Offset="0.0"/>
+                                <GradientStop Color="Black" Offset="0.5"/>
+                                <GradientStop Color="Transparent" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <Label Text="{Binding current.movieTitle}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="20"/>
+                    </Grid>
                 </Grid>
-            </StackLayout>
 
-            <!-- Ratings and Other Info -->
-            <StackLayout Grid.Column="2" Padding="20" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
-                <Label Text="RATINGS AND OTHER INFO" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                <Label FontSize="14" TextColor="Black" LineBreakMode="WordWrap" Margin="0,10" x:Name="RATING" />
-            </StackLayout>
+                <!-- Movie Synopsis -->
+                <StackLayout Grid.Column="1" Padding="20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="False">
+                    <Grid RowDefinitions="Auto,*,Auto">
+                        <Label Text="Movie Synopsis" FontSize="18" FontAttributes="Bold" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" Grid.Row="0" />
+                        <Label FontSize="14" TextColor="{Binding pageTheme.accent}" LineBreakMode="WordWrap" Margin="0,10" Grid.Row="1" x:Name="DESC" />
+                        <Button Text="+" FontSize="Large" WidthRequest="40" HeightRequest="40" BackgroundColor="{Binding pageTheme.background}" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2"/>
+                    </Grid>
+                </StackLayout>
+
+                <!-- Ratings and Other Info -->
+                <StackLayout Grid.Column="2" Padding="20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="False">
+                    <Label Text="RATINGS AND OTHER INFO" FontSize="18" FontAttributes="Bold" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" />
+                    <Label FontSize="14" TextColor="{Binding pageTheme.accent}" LineBreakMode="WordWrap" Margin="0,10" x:Name="RATING" />
+                </StackLayout>
+            </Grid>
+        </Grid>
+
+        <!-- Define Search Button-->
+        <Grid Margin="50,27,50,100" VerticalOptions="Start" HorizontalOptions="Start">
+            <HorizontalStackLayout>
+                <Label Text="&#x26B2;" TextColor="{Binding pageTheme.highlight}" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center" Rotation="45"/>
+                <Label Text="|Search" TextColor="{Binding pageTheme.highlight}" FontSize="15" VerticalOptions="Center" Margin="7,1,2,7"/>
+            </HorizontalStackLayout>
+            <Button VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="startSearch"/>
+        </Grid>
+
+        <!-- Handle Search Output - Layered Above Everything -->
+        <Grid RowDefinitions="75,*,100" ColumnDefinitions="150,*,150" x:Name="searchGrid" IsVisible="False">
+            <!-- Handle User Clicking Off Search Bar -->
+            <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
+
+            <!-- Define Search Bar -->
+            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
+
+            <!-- Query and Display Search Results -->
+            <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </ContentPage>
