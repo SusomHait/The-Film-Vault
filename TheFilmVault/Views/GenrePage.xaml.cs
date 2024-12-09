@@ -35,24 +35,20 @@ public partial class GenrePage : ContentPage
         dynamicTitle.Text = $"{caller.genreName.Trim()}";
         localDriver();
 
-        //APIs.getMovieData($"https://thefilmvault.pythonanywhere.com/genre_search?genre={page_genre}&adult={Preferences.Default.Get("show_adult", "false")}&page={current_page}");
-
         genreGrid.ItemsSource = genre_options;
     }
 
-    private async void loadMore(object sender, EventArgs e)
+    private void loadMore(object sender, EventArgs e)
     {
         current_page++;
-        //string url = $"https://thefilmvault.pythonanywhere.com/genre_search?genre={page_genre}&adult={Preferences.Default.Get("show_adult", "false")}&page={current_page}";
         if (current_page <= 500) localDriver();
-        //await APIs.getMovieData(url);
     }
 
-    private void localDriver()
+    private async void localDriver()
     {
         HttpClient client = new HttpClient();
-        HttpResponseMessage response = client.GetAsync($"https://thefilmvault.pythonanywhere.com/genre_search?genre={page_genre}&adult={Preferences.Default.Get("show_adult", "false")}&page={current_page}").GetAwaiter().GetResult();
-        string json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        HttpResponseMessage response = await client.GetAsync($"https://thefilmvault.pythonanywhere.com/genre_search?genre={page_genre}&adult={Preferences.Default.Get("show_adult", "false")}&page={current_page}");
+        string json = await response.Content.ReadAsStringAsync();
 
         using (JsonDocument doc = JsonDocument.Parse(json))
         {
