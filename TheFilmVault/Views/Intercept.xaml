@@ -5,27 +5,52 @@
              Title="Intercept" BackgroundColor="#151515">
 
     <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
-        <!-- Start Background Definition -->
-        <Label Text="Create/Login to Account" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
+        <!-- Top Header -->
+        <Label Text="Create/Login to Account" TextColor="White" FontSize="30" 
+               HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0"/>
 
-        <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-            <BoxView BackgroundColor="White" Grid.Column="0"/>
-            <BoxView BackgroundColor="White" Grid.Column="2"/>
+        <!-- Main Content -->
+        <Grid Grid.Row="1" VerticalOptions="Center">
+            <StackLayout x:Name="MainStack" VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
+                <Label x:Name="PageTitle" Text="You are not logged in to an account" 
+                       TextColor="White" FontSize="30" HorizontalOptions="Center" 
+                       VerticalOptions="Center" Margin="0,20"/>
+
+                <StackLayout x:Name="ButtonRow" Orientation="Horizontal" Spacing="20" HorizontalOptions="Center">
+                    <Button Text="Create Account" BackgroundColor="#151515" TextColor="White" 
+                            FontSize="20" Clicked="OnCreateAccountClicked"/>
+                    <Button Text="Login" BackgroundColor="#151515" TextColor="White" 
+                            FontSize="20" Clicked="OnLoginClicked"/>
+                </StackLayout>
+            </StackLayout>
+
+            <!-- Create Account Form -->
+            <StackLayout x:Name="CreateAccountStack" IsVisible="False" Spacing="20" 
+                         VerticalOptions="Center" HorizontalOptions="Center" Margin="30">
+                <Label Text="Create Account" TextColor="White" FontSize="25" HorizontalOptions="Center"/>
+                <Entry x:Name="CreateUsername" Placeholder="Username" PlaceholderColor="White" 
+                       FontSize="15" TextColor="White"/>
+                <Entry x:Name="CreatePassword" Placeholder="Password" PlaceholderColor="White" 
+                       FontSize="15" TextColor="White" IsPassword="True"/>
+                <Button Text="Create Account" BackgroundColor="#151515" TextColor="White" 
+                        FontSize="20" Clicked="OnCreateAccountSubmit"/>
+            </StackLayout>
+
+            <!-- Login Form -->
+            <StackLayout x:Name="LoginStack" IsVisible="False" Spacing="20" 
+                         VerticalOptions="Center" HorizontalOptions="Center" Margin="30">
+                <Label Text="Login" TextColor="White" FontSize="25" HorizontalOptions="Center"/>
+                <Entry x:Name="LoginUsername" Placeholder="Username" PlaceholderColor="White" 
+                       FontSize="15" TextColor="White"/>
+                <Entry x:Name="LoginPassword" Placeholder="Password" PlaceholderColor="White" 
+                       FontSize="15" TextColor="White" IsPassword="True"/>
+                <Button Text="Login" BackgroundColor="#151515" TextColor="White" 
+                        FontSize="20" Clicked="OnLoginSubmit"/>
+            </StackLayout>
         </Grid>
 
-        <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-            <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-            <BoxView BackgroundColor="White" Grid.Row="2"/>
-        </Grid>
-
-        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-            <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
-        </Grid>
-
-        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
-        <!-- End Background Definition -->
+        <!-- Footer -->
+        <Label Text="The Film Vault" TextColor="White" FontSize="25" 
+               Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
     </Grid>
 </ContentPage>
