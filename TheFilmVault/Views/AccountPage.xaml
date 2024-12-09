@@ -23,11 +23,11 @@
 
         <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
 
-            <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+            <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="OnMoviesButtonClicked"/>
 
-            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"   Clicked="OnHomeButtonClicked"/>
 
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="OnWatchlistButtonClicked"/>
 
         </Grid>
 
