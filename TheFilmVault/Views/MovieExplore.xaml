@@ -67,7 +67,10 @@
                                                         <GradientStop Color="Transparent" Offset="1.0"/>
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                <Label Text="{Binding movieRating}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="20"/>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="&#9734;" TextColor="White" VerticalOptions="Center" FontSize="25" Margin="20,0,0,0"/>
+                                                    <Label Text="{Binding movieRating}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="10,20,20,20"/>
+                                                </HorizontalStackLayout>
                                             </Grid>
                                         </Border>
                                     </Grid>

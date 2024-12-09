@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.MovieView"
-             Title="MovieView" BackgroundColor="#151515">
+             Title="MovieView" BackgroundColor="{Binding pageTheme.background}" x:Name="movieView">
 
     <Grid>
-        <Grid RowDefinitions="75,*,75" Padding="10">
+        <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
             <!-- Start Background Definition -->
             <Label Text="Movies" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
 
@@ -29,44 +29,35 @@
             <!-- End Background Definition -->
 
             <!-- Main Content Section -->
-            <Grid Grid.Row="1" ColumnDefinitions="2*,*,*" ColumnSpacing="20" RowDefinitions="*" Margin="150,40,150,25">
+            <Grid Grid.Row="1" ColumnDefinitions="3*,*" RowDefinitions="60,1,*" Margin="150,45,150,25">
                 <!-- Movie Name and Poster -->
-                <HorizontalStackLayout VerticalOptions="Fill" HorizontalOptions="Fill" Grid.ColumnSpan="3">
-                    <Grid HorizontalOptions="Start" VerticalOptions="Fill">
-                        <Image Source="{Binding current.backdropPath}" Aspect="AspectFit" VerticalOptions="Fill" HorizontalOptions="Center"/>
-                    </Grid>
-                    <Label Text="{Binding current.movieDesc}" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+                <VerticalStackLayout Margin="20,0">
+                    <Label Text="{Binding current.movieTitle}" TextColor="{Binding pageTheme.accent}" FontSize="30"/>
+                    <Label Text="{Binding extra.tagline}" TextColor="{Binding pageTheme.accent}"/>
+                </VerticalStackLayout>
 
-                </HorizontalStackLayout>
-                
-                <Grid Grid.Column="0" IsVisible="False">
-                    <Image Source="{Binding current.posterPath}"  Aspect="AspectFit" x:Name="IMG" />
-                    <Grid VerticalOptions="Start" HorizontalOptions="Fill">
-                        <Grid.Background>
-                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                                <GradientStop Color="Transparent" Offset="0.0"/>
-                                <GradientStop Color="Black" Offset="0.5"/>
-                                <GradientStop Color="Transparent" Offset="1.0"/>
-                            </LinearGradientBrush>
-                        </Grid.Background>
-                        <Label Text="{Binding current.movieTitle}" TextColor="White" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="20"/>
-                    </Grid>
-                </Grid>
+                <VerticalStackLayout Grid.Column="1" Margin="0,10">
+                    <Label Text="{Binding extra.release_date}" TextColor="{Binding pageTheme.accent}"/>
+                    <Label Text="{Binding extra.runtime}" TextColor="{Binding pageTheme.accent}"/>
+                </VerticalStackLayout>
 
-                <!-- Movie Synopsis -->
-                <StackLayout Grid.Column="1" Padding="20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="False">
-                    <Grid RowDefinitions="Auto,*,Auto">
-                        <Label Text="Movie Synopsis" FontSize="18" FontAttributes="Bold" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" Grid.Row="0" />
-                        <Label FontSize="14" TextColor="{Binding pageTheme.accent}" LineBreakMode="WordWrap" Margin="0,10" Grid.Row="1" x:Name="DESC" />
-                        <Button Text="+" FontSize="Large" WidthRequest="40" HeightRequest="40" BackgroundColor="{Binding pageTheme.background}" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2"/>
-                    </Grid>
-                </StackLayout>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="1" Grid.ColumnSpan="2" Margin="20,0"/>
 
-                <!-- Ratings and Other Info -->
-                <StackLayout Grid.Column="2" Padding="20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="False">
-                    <Label Text="RATINGS AND OTHER INFO" FontSize="18" FontAttributes="Bold" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" />
-                    <Label FontSize="14" TextColor="{Binding pageTheme.accent}" LineBreakMode="WordWrap" Margin="0,10" x:Name="RATING" />
-                </StackLayout>
+                <VerticalStackLayout Grid.Row="2" Grid.Column="1" VerticalOptions="Fill" Margin="0,10,20,20">
+                    <Label Text="Overview: " TextColor="{Binding pageTheme.accent}" Margin="0,10"/>
+                    <Label Text="{Binding current.movieDesc}" TextColor="{Binding pageTheme.accent}" LineBreakMode="WordWrap"/>
+                    <Label Text="Rating:" TextColor="{Binding pageTheme.accent}" Margin="0,10"/>
+
+                    <HorizontalStackLayout>
+                        <Label Text="&#9734;" TextColor="{Binding pageTheme.accent}" VerticalOptions="Center" FontSize="15" Margin="0,0,5,0"/>
+                        <Label Text="{Binding current.movieRating}" TextColor="{Binding pageTheme.accent}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <Button Text="Add to Watchlist" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.accent}" BorderWidth="2" Grid.Row="2" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Margin="10"/>
+
+                <Image Source="{Binding current.backdropPath}" Aspect="AspectFill" Grid.Row="2" x:Name="IMG" Margin="20,10"/>
+                <WebView Source="{Binding extra.videoPath}" Grid.Row="2" Margin="20,10"/>
             </Grid>
         </Grid>
 
@@ -92,7 +83,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0"/>
+                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0" Command="{Binding Source={x:Reference movieView}, Path=BindingContext.goMoviePage}" CommandParameter="{Binding .}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

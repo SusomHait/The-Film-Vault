@@ -1,46 +1,116 @@
+using System.Text.Json;
+using System.Windows.Input;
 using TheFilmVault.Models;
 
 namespace TheFilmVault.Views;
 
 public partial class MovieView : ContentPage
 {
-	public Themes pageTheme { get; set; }
-	public Movie current { get; }
+    public ICommand goMoviePage { get; }
+    public Themes pageTheme { get; set; }
+	public Movie current { get; set; }
+    public ExtraDetails? extra { get; set; }
 
 	public MovieView(Movie caller)
 	{
 		InitializeComponent();
-		getDetails(caller.movieId);
-		current = caller;
+        getDetails(caller.movieId);
 
-		//IMG.Source = caller.posterPath;
-		DESC.Text = caller.movieDesc;
-		RATING.Text = caller.movieRating;
+        APIs.movies.Clear();
+        moviesOptions.ItemsSource = APIs.movies;
 
-		pageTheme = new Themes();
-		BindingContext = this;
+        goMoviePage = new Command<Movie>(openMoviePage);
+
+        current = caller;
+        pageTheme = new Themes();
+        BindingContext = this;
 	}
 
-	private async void getDetails(long ID)
-	{
-		HttpClient client = new HttpClient();
-		HttpResponseMessage response = await client.GetAsync($"https://thefilmvault.pythonanywhere.com/details?id={ID}");
+    // grab extra details
+    private void getDetails(long ID)
+    {
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = client.GetAsync($"https://thefilmvault.pythonanywhere.com/details?id={ID}").GetAwaiter().GetResult();
 
-		string json = await response.Content.ReadAsStringAsync();
-	}
+        string json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+        string? tagline, runtime, releaseDate;
+        using (JsonDocument doc = JsonDocument.Parse(json))
+        {
+            var root = doc.RootElement;
+
+            tagline = root.GetProperty("tagline").GetString();
+            runtime = root.GetProperty("runtime").GetInt32().ToString();
+            releaseDate = root.GetProperty("release_date").GetString();
+        }
+
+        response = client.GetAsync($"https://thefilmvault.pythonanywhere.com/video?id={ID}").GetAwaiter().GetResult();
+        json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+        string key = "none";
+        using (JsonDocument doc = JsonDocument.Parse(json))
+        {
+            var root = doc.RootElement;
+            var options = root.GetProperty("results");
+
+            foreach (JsonElement video in options.EnumerateArray())
+            {
+                if (video.GetProperty("site").GetString() == "YouTube")
+                {
+                    key = video.GetProperty("key").GetString();
+                    break;
+                }
+            }
+        }
+
+        if (key == "none") key = current.backdropPath;
+        else key = "https://www.youtube.com/embed/" + key;
+
+        extra = new ExtraDetails
+        {
+            tagline = tagline,
+            runtime = runtime + " mins.",
+            release_date = "Released: " + releaseDate,
+            videoPath = "" + key
+        };
+    }
+
+    // Search Bar Functionality
+    private async void searchOptions(string input)
+    {
+        APIs.movies.Clear();
+        await APIs.getMovieData($"https://thefilmvault.pythonanywhere.com/search?query={input}&adult={Preferences.Default.Get("show_adult", "false")}");
+    }
 
     private void startSearch(object sender, EventArgs e)
     {
-
-    }
-
-    private void removeSearchOptions(object sender, EventArgs e)
-    {
-
+        searchGrid.IsVisible = true;
+        searchEntry.Text = null;
+        moviesOptions.IsVisible = false;
     }
 
     private void populateResults(object sender, TextChangedEventArgs e)
     {
+        if (searchEntry.Text == null || searchEntry.Text.Length == 0)
+        {
+            moviesOptions.IsVisible = false;
+        }
+        else
+        {
+            searchOptions(searchEntry.Text.Trim());
+            moviesOptions.IsVisible = true;
+        }
+    }
 
+    private void removeSearchOptions(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = false;
+        moviesOptions.IsVisible = false;
+    }
+
+    // page navigation
+    private void openMoviePage(Movie calling_movie)
+    {
+        App.Current.MainPage = new MovieView(calling_movie);
     }
 }

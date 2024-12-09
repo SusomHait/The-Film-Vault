@@ -73,7 +73,7 @@
         <!-- Handle Search Output -->
         <Grid x:Name="searchGrid" IsVisible="False" RowDefinitions="*,*">
             <!-- Handle User Clicking Off Search Bar -->
-            <Button x:Name="focusButton" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" IsVisible="True" Clicked="removeSearchOptions"/>
+            <Button x:Name="focusButton" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.RowSpan="2" BackgroundColor="Transparent" IsVisible="True" Clicked="removeSearchOptions"/>
 
             <!-- Query and Display Search Results -->
             <ListView x:Name="moviesOptions" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,40,0,100" Grid.Row="1" MaximumWidthRequest="995">

@@ -12,7 +12,7 @@ namespace TheFilmVault.Models
         {
             if (Preferences.Default.Get("theme", "dark") == "dark")
             {
-                loadDark();
+                loadLight();
             }
             else
             {
