@@ -18,6 +18,10 @@ namespace TheFilmVault
             {
                 Preferences.Default.Set("theme", "dark");
             }
+            if (!Preferences.Default.ContainsKey("show_adult"))
+            {
+                Preferences.Default.Set("show_adult", "false");
+            }
 
             App.Current.MainPage = new Views.AppStartPage();
         }
@@ -25,7 +29,7 @@ namespace TheFilmVault
         private async void loadElements()
         {
             APIs.movies.Clear();
-            await APIs.getMovieData("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1", carousel_count);
+            await APIs.getMovieData("https://thefilmvault.pythonanywhere.com/load_carousel", carousel_count);
 
             foreach (Movie element in APIs.movies)
             {

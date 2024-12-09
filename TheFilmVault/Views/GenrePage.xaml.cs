@@ -19,7 +19,7 @@ public partial class GenrePage : ContentPage
         dynamicTitle.Text = $"{caller.genreName.Trim()}";
 
         APIs.movies.Clear();
-        APIs.getMovieData($"https://api.themoviedb.org/3/discover/movie?include_adult=false&language=en-US&page={current_page}&sort_by=popularity.desc&with_genres={page_genre}");
+        APIs.getMovieData($"https://thefilmvault.pythonanywhere.com/genre_search?genre={page_genre}&adult={Preferences.Default.Get("show_adult", "false")}&page={current_page}");
 
         genreGrid.ItemsSource = APIs.movies;
     }
@@ -27,7 +27,7 @@ public partial class GenrePage : ContentPage
     private async void loadMore(object sender, EventArgs e)
     {
         current_page++;
-        string url = $"https://api.themoviedb.org/3/discover/movie?include_adult=false&language=en-US&page={current_page}&sort_by=popularity.desc&with_genres={page_genre}";
+        string url = $"https://thefilmvault.pythonanywhere.com/genre_search?genre={page_genre}&adult={Preferences.Default.Get("show_adult", "false")}&page={current_page}";
         if (current_page <= 500) await APIs.getMovieData(url);
     }
 }

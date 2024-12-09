@@ -33,7 +33,7 @@ public partial class MovieExplore : ContentPage
     private async void searchOptions(string input)
     {
         APIs.movies.Clear();
-        await APIs.getMovieData($"https://api.themoviedb.org/3/search/movie?query={input}&include_adult=false&language=en-US&page=1");
+        await APIs.getMovieData($"https://thefilmvault.pythonanywhere.com/search?query={input}&adult={Preferences.Default.Get("show_adult", "false")}");
     }
 
     private void startSearch(object sender, EventArgs e)
