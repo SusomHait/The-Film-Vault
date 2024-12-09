@@ -65,11 +65,13 @@ public partial class MovieExplore : ContentPage
     // navigation to genre pages
     private void openGenrePage(Genre calling_genre)
     {
+        _timer?.Stop();
         App.Current.MainPage = new GenrePage(calling_genre);
     }
 
     private void openMoviePage(Movie calling_movie)
     {
+        _timer?.Stop();
         App.Current.MainPage = new MovieView(calling_movie);
     }
 

@@ -93,5 +93,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+
+        <Button Text="&lt; Return" TextColor="{Binding pageTheme.highlight}" BackgroundColor="{Binding pageTheme.background}" VerticalOptions="End" HorizontalOptions="Start" Margin="20,10" Clicked="goExplore"/>
     </Grid>
 </ContentPage>

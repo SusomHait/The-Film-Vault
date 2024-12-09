@@ -56,8 +56,12 @@
 
                 <Button Text="Add to Watchlist" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.accent}" BorderWidth="2" Grid.Row="2" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Margin="10"/>
 
-                <Image Source="{Binding current.backdropPath}" Aspect="AspectFill" Grid.Row="2" x:Name="IMG" Margin="20,10"/>
-                <WebView Source="{Binding extra.videoPath}" Grid.Row="2" Margin="20,10"/>
+                <Grid Grid.Row="2">
+                    <Label Text="loading..." TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Grid>
+                
+                <Image Source="{Binding current.backdropPath}" Aspect="AspectFill" Grid.Row="2" Margin="20,10" x:Name="backup"/>
+                <WebView Source="{Binding extra.videoPath}" Grid.Row="2" Margin="20,10" x:Name="vidPlayer"/>
             </Grid>
         </Grid>
 

@@ -14,6 +14,7 @@ public partial class MovieView : ContentPage
 	public MovieView(Movie caller)
 	{
 		InitializeComponent();
+        current = caller;
         getDetails(caller.movieId);
 
         APIs.movies.Clear();
@@ -21,7 +22,6 @@ public partial class MovieView : ContentPage
 
         goMoviePage = new Command<Movie>(openMoviePage);
 
-        current = caller;
         pageTheme = new Themes();
         BindingContext = this;
 	}
@@ -63,15 +63,23 @@ public partial class MovieView : ContentPage
             }
         }
 
-        if (key == "none") key = current.backdropPath;
-        else key = "https://www.youtube.com/embed/" + key;
+        if (key == "none")
+        {
+            vidPlayer.IsVisible = false;
+            key = "";
+        }
+        else
+        {
+            backup.IsVisible = false;
+            key = "https://www.youtube.com/embed/" + key;
+        }
 
         extra = new ExtraDetails
         {
             tagline = tagline,
             runtime = runtime + " mins.",
             release_date = "Released: " + releaseDate,
-            videoPath = "" + key
+            videoPath = key
         };
     }
 
