@@ -13,7 +13,21 @@ namespace TheFilmVault
             InitializeComponent();
             loadElements();
 
+            Preferences.Default.Clear();
+
             // init theme if it doesn't exist
+            if (!Preferences.Default.ContainsKey("logged_in"))
+            {
+                Preferences.Default.Set("logged_in", false);
+            }
+            if (!Preferences.Default.ContainsKey("userID"))
+            {
+                Preferences.Default.Set("userID", "none");
+            }
+            if (!Preferences.Default.ContainsKey("username"))
+            {
+                Preferences.Default.Set("username", "Sign In");
+            }
             if (!Preferences.Default.ContainsKey("theme"))
             {
                 Preferences.Default.Set("theme", "dark");
@@ -22,7 +36,7 @@ namespace TheFilmVault
             {
                 Preferences.Default.Set("show_adult", "false");
             }
-
+            
             App.Current.MainPage = new Views.AppStartPage();
         }
 

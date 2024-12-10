@@ -8,14 +8,15 @@ public partial class AppStartPage : ContentPage
     public ICommand goMovieView { get; }
     public Themes pageTheme { get; set; }
 
-
     public AppStartPage()
 	{
 		InitializeComponent();
         
         APIs.movies.Clear();
         moviesOptions.ItemsSource = APIs.movies;
-        
+
+        signInButton.Text = Preferences.Default.Get("username", "Sign In");
+
         goMovieView = new Command<Movie>(openMoviePage);
         pageTheme = new Themes();
         BindingContext = this;
@@ -60,6 +61,27 @@ public partial class AppStartPage : ContentPage
     }
 
     private void goMovies(object sender, EventArgs e) { App.Current.MainPage = new MovieExplore(); }
-    private void goWatchlist(object sender, EventArgs e) { App.Current.MainPage = new Watchlist(); }
-    private void goAccount(object sender, EventArgs e) { App.Current.MainPage = new AccountPage(); }
+    private void goWatchlist(object sender, EventArgs e) 
+    {
+        if (Preferences.Default.Get("logged_in", false))
+        {
+            App.Current.MainPage = new Watchlist();
+        }
+        else
+        {
+            App.Current.MainPage = new Intercept();
+        }
+    }
+    private void goAccount(object sender, EventArgs e) 
+    { 
+        if (Preferences.Default.Get("logged_in", false))
+        {
+            App.Current.MainPage = new AccountPage();
+            
+        }
+        else
+        {
+            App.Current.MainPage = new Intercept();
+        }
+    }
 }

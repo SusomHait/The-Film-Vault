@@ -54,7 +54,7 @@
             </Grid>
 
             <!-- Create Sign In Button -->
-            <Button Text="Sign In" HorizontalOptions="End" VerticalOptions="Start" Margin="20,10" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}"/>
+            <Button HorizontalOptions="End" VerticalOptions="Start" Margin="20,10" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" x:Name="signInButton" Clicked="goAccount"/>
 
             <!-- Create Central Panel -->
             <Border VerticalOptions="Center" HorizontalOptions="Fill" Padding="30" MaximumWidthRequest="1000" BackgroundColor="{Binding pageTheme.background}" Stroke="Transparent">
