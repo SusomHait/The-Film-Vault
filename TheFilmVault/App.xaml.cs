@@ -12,8 +12,6 @@ namespace TheFilmVault
         {
             InitializeComponent();
             loadElements();
-            
-            Preferences.Default.Clear();
 
             // init theme if it doesn't exist
             if (!Preferences.Default.ContainsKey("logged_in"))
@@ -27,6 +25,10 @@ namespace TheFilmVault
             if (!Preferences.Default.ContainsKey("username"))
             {
                 Preferences.Default.Set("username", "Sign In");
+            }
+            if (!Preferences.Default.ContainsKey("password"))
+            {
+                Preferences.Default.Set("password", "none");
             }
             if (!Preferences.Default.ContainsKey("theme"))
             {

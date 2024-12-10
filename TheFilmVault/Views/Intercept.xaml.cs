@@ -64,7 +64,8 @@ namespace TheFilmVault.Views
 
                         Preferences.Default.Set("logged_in", true);
                         Preferences.Default.Set("username", username);
-                        Preferences.Default.Set("user_id", root.GetProperty("id").GetInt32());
+                        Preferences.Default.Set("password", password);
+                        Preferences.Default.Set("userID", root.GetProperty("id").GetInt32());
                     }
 
                     App.Current.MainPage = new AccountPage();
@@ -109,8 +110,9 @@ namespace TheFilmVault.Views
 
                         Preferences.Default.Set("logged_in", true);
                         Preferences.Default.Set("username", username);
+                        Preferences.Default.Set("password", password);
 
-                        Preferences.Default.Set("user_id", root.GetProperty("id").GetInt32());
+                        Preferences.Default.Set("userID", root.GetProperty("id").GetInt32());
                         Preferences.Default.Set("show_adult", root.GetProperty("show_adult").GetString());
                         Preferences.Default.Set("theme", root.GetProperty("theme").GetString());
                     }

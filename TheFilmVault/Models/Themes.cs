@@ -10,9 +10,14 @@ namespace TheFilmVault.Models
 
         public Themes()
         {
+            loadTheme();
+        }
+
+        private void loadTheme()
+        {
             if (Preferences.Default.Get("theme", "dark") == "dark")
             {
-                loadLight();
+                loadDark();
             }
             else
             {
@@ -34,8 +39,10 @@ namespace TheFilmVault.Models
             highlight = Color.Parse("#bc4749");
         } 
 
-        private void refresh()
+        public void refresh()
         {
+            loadTheme();
+
             OnPropertyChanged(nameof(background));
             OnPropertyChanged(nameof(accent));
             OnPropertyChanged(nameof(highlight));

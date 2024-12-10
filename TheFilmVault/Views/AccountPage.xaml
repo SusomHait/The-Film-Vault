@@ -2,278 +2,74 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.AccountPage"
-             Title="AccountPage" BackgroundColor="#151515">
+             Title="AccountPage" BackgroundColor="{Binding pageTheme.background}">
 
-    <Grid RowDefinitions="50,*,75" Padding="0,10,0,0">
+    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
         <!-- Start Background Definition -->
+        <Label Text="Account" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
+
         <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-
-            <BoxView BackgroundColor="White" Grid.Column="0"/>
-
-            <BoxView BackgroundColor="White" Grid.Column="2"/>
+            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
+            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
         </Grid>
 
         <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-
-            <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-
-            <BoxView BackgroundColor="White" Grid.Row="2"/>
-
+            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
         </Grid>
 
         <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-
-            <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="OnMoviesButtonClicked"/>
-
-            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"   Clicked="OnHomeButtonClicked"/>
-
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="OnWatchlistButtonClicked"/>
-
+            <Button Text="- ACCOUNT -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+            <Button Text="- HOME -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="OnHomeButtonClicked"/>
+            <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
         </Grid>
 
-        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+        <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
         <!-- End Background Definition -->
 
-        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" Margin="150,50">
+        <Grid Grid.Row="1" RowDefinitions="40,*" ColumnDefinitions="*,4,*" Margin="150,50">
+            
+            <Label x:Name="welcomeMsg" FontSize="30" TextColor="{Binding pageTheme.accent}" Grid.ColumnSpan="5" Margin="20,0"/>
+
+            <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="{Binding pageTheme.accent}"/>
 
             <!-- Username Label -->
-            <VerticalStackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Margin="250,0,0,0" HorizontalOptions="StartAndExpand">
-                <Label Text="USERNAME:"
-                   TextColor="White"
-                   FontSize="25" 
-                   FontAttributes="Bold"
-                   VerticalOptions="Start"
-                   HorizontalOptions="Start"
-                 />
-            
+            <VerticalStackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="10" Margin="20">
+                <Label Text="User Information" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
+                
+                <Label Text="Username:" TextColor="{Binding pageTheme.accent}"/>
+                <Entry x:Name="userEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" MaximumWidthRequest="1000"/>
 
-            <!-- Username Display -->
-      
-                <Label Text="JohnDoe123"
-                   TextColor="white"
-                   FontSize="25"
-                   Padding="0,5,0,0"
-                   WidthRequest="175"
-                   HeightRequest="40"
-                   Margin="0,0,0,40"
-                   VerticalOptions="Start"
-                   HorizontalOptions="Start"/>
-         
+                <Label Text="Password:" TextColor="{Binding pageTheme.accent}"/>
+                <Entry x:Name="pswdEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" IsPassword="True" MaximumWidthRequest="1000"/>
 
-            <!-- Password Label -->
-       
-                <Label Text="PASSWORD:"
-                   TextColor="White"
-                   FontSize="25"       
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Start"
-                   Padding="0,0,0,0"
-                   Margin="0,0,0,0"/>
-          
-
-            <!-- Password Display -->
-         
-                <Label Text="********"
-                   TextColor="white"
-                   FontSize="25"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Start"
-                   Padding="0,5,0,0"
-                   Margin="0,10,0,120" 
-                   WidthRequest="150"
-                   HeightRequest="25"/>
-    
-
-            <!-- Dark Theme Label -->
-          
-                <Label Text="Light Theme"
-                   TextColor="White"
-                   FontSize="25"
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Start"
-                   Padding="0,0,0,10" 
-                   />
-          
-
-            <!-- Dark Theme Switch -->
-           
-                <Switch x:Name="DarkModeSwitch"
-                    OnColor="#4CAF50"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Start"
-                    IsToggled="False"
-                    Margin="0,0,0,80"
-                    ThumbColor="#f3c045"/>
-       
-
-            <!-- Mature Content Label -->
-           
-                <Label Text="Mature Content"
-                   TextColor="White"
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Start"
-                   Padding="0,0,0,25"
-                   Margin="0,0,0,0"
-                   FontSize="25"/>
-            
-
-            <!-- Mature Content Switch -->
-         
-                <Switch x:Name="MatureContentSwitch"
-                    OnColor="#4CAF50"
-                    ThumbColor="#f3c045"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="StartAndExpand"
-                    IsToggled="false"
-                    WidthRequest="15"
-                    HeightRequest="30"
-                    Margin="0,0,0,0"/>
-         
-
-        
-                <Button Text="Delete Account"
-                    BackgroundColor="#f3c045"
-                    TextColor="Black"
-                    FontAttributes="Bold"
-                    Padding="10,5"
-                    Margin="0,150,0,0"
-                    WidthRequest="200"
-                    HeightRequest="60"
-                    CornerRadius="5"/>
+                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                    <Label Text="Show Password" TextColor="{Binding pageTheme.accent}" VerticalOptions="Center"/>
+                    <CheckBox x:Name="showPswd" CheckedChanged="showPass" Margin="0,0,0,2" Color="{Binding pageTheme.highlight}"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
 
-            <Grid Grid.Row="0" Grid.Column="2"  Grid.ColumnSpan="1"  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto">
+            <VerticalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="FillAndExpand" Spacing="10" Margin="20">
+                <Label Text="Account Options" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
 
-                <VerticalStackLayout Grid.Row="0" Grid.Column="2" VerticalOptions="StartAndExpand" Margin="260,0,0,0" HorizontalOptions="StartAndExpand">
+                <Label Text="Theme:" TextColor="{Binding pageTheme.accent}"/>
+                <Picker x:Name="themeSelector" BackgroundColor="White" SelectedIndexChanged="changeTheme">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>dark</x:String>
+                            <x:String>light</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
 
+                <HorizontalStackLayout>
+                    <Label Text="Show Adult Content" TextColor="{Binding pageTheme.accent}" Margin="0,0,5,0" VerticalOptions="Center"/>
+                    <CheckBox x:Name="contentFilter" Color="{Binding pageTheme.highlight}" CheckedChanged="changeFilter"/>
+                </HorizontalStackLayout>
 
-
-
-                    <!-- Statistics Title -->
-                <Label Text="STATISTICS"
-                       
-                   TextColor="White"
-                   FontAttributes="Bold"
-                   HorizontalOptions="StartAndExpand"
-                   VerticalOptions="StartAndExpand"
-                   Padding="23,0,0,75"
-                   FontSize="25"
-                   
-                  
-                       />
-
-                <!-- Date Joined -->
-                
-
-            <Label Text="Date Joined:"      
-           Grid.Row="2"
-           TextColor="white" 
-           HorizontalOptions="StartAndExpand"
-           VerticalOptions="StartAndExpand"  
-           FontSize="25"     
-           Padding="15,0,0,0"
-                   />
-
-              
-
-                <!-- Date Joined Value with Border -->
-                <Label Text="01/01/2022"
-                       
-           Grid.Row="3"    
-           TextColor="white"    
-          HorizontalOptions="StartAndExpand"     
-          VerticalOptions="StartAndExpand"   
-          Padding="30,0,0,100"    
-           FontSize="25"      
-            WidthRequest="200"/>
-
-                <!-- Hours Watched Label with Border -->
-              
-                <Label Text="WATCHTIME:"
-            
-           Grid.Row="6"  
-           TextColor="white"  
-           FontSize="25"
-           HorizontalOptions="StartAndExpand"
-           VerticalOptions="StartAndExpand"
-           Padding="30,0,0,0"
-           WidthRequest="200"
-                       
-            />
-
-               
-
-                <!-- Hours Watched Value with Border -->
-                <Label Text="120"
-                       
-           Grid.Row="8"
-                           
-           HorizontalOptions="StartAndExpand"    
-           VerticalOptions="StartAndExpand"     
-           Padding="80,0,0,0"       
-           WidthRequest="140"
-                       
-            FontSize="25"   
-            TextColor="white"/>
-                </VerticalStackLayout>
-                
-            </Grid>
-                
-
-            <Grid Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1"
-                 
-          RowDefinitions="Auto,Auto,Auto"  
-          ColumnDefinitions="Auto,Auto,Auto,Auto"    
-          Margin="0,0,0,0"
-           Padding="0,0,0,0"
-                     
-         >
-
-                <!-- Movie Image with Border -->
-                <Border Grid.Row="0" Grid.Column="3"    
-                        
-                VerticalOptions="StartAndExpand"                       
-                HorizontalOptions="EndAndExpand"                       
-                Padding="100,50,1,100"                       
-                Margin="625,0,0,0"                      
-                BackgroundColor="white">
-                    
-                <Image Source="movie_poster_placeholder.png"
-                           
-                Aspect="AspectFill"                          
-                VerticalOptions="StartAndExpand"                           
-                HorizontalOptions="EndAndExpand"                    
-                Margin="175,300,50,10"/>
-                                                                                                                        
-                </Border>
-
-                <!-- Movie Title -->
-                <Label Text="Movie Title"
-                       
-               Grid.Row="1" Grid.Column="3"        
-                       
-               TextColor="White"                       
-               FontAttributes="Bold"                       
-               HorizontalOptions="EndAndExpand"                       
-               VerticalOptions="EndAndExpand"                      
-               Margin="0,40,55,0"                       
-                FontSize="25"/>
-
-                <!-- Movie Rating -->
-                <Label Text="⭐ 4.5/5"
-                       
-               Grid.Row="2" Grid.Column="3"                       
-               TextColor="Yellow"
-               HorizontalOptions="EndAndExpand"                       
-               VerticalOptions="EndAndExpand"                       
-               Margin="0,40,90,00"                       
-               FontSize="25"/>
-                
-            </Grid>
-          
+                <Button Text="Sign Out" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.highlight}" BorderWidth="2" Clicked="signOut"/>
+                <Button Text="Delete Account" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.highlight}" BorderWidth="2" Clicked="delAcc"/>
+            </VerticalStackLayout>
         </Grid>
         
     </Grid>
