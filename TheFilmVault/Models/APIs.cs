@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text.Json;
@@ -59,7 +60,7 @@ namespace TheFilmVault.Models
         {
             try
             {
-                string json = await returnJSON("https://api.themoviedb.org/3/genre/movie/list?language=en");
+                string json = await returnJSON("https://thefilmvault.pythonanywhere.com/genre_list");
 
                 using (JsonDocument doc = JsonDocument.Parse(json))
                 {
@@ -91,9 +92,7 @@ namespace TheFilmVault.Models
             try
             {
                 HttpClient client = new HttpClient();
-                var KEY = await SecureStorage.GetAsync("API_KEY");
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", KEY);
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 

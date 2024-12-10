@@ -2,63 +2,98 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.GenrePage"
-             Title="GenrePage" BackgroundColor="#151515">
+             Title="GenrePage" BackgroundColor="{Binding pageTheme.background}" x:Name="genrePage">
 
-    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
-        <!-- Start Background Definition -->
-        <Label x:Name="dynamicTitle" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
+    <Grid>
+        <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+            <!-- Start Background Definition -->
+            <Label x:Name="dynamicTitle" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-            <BoxView BackgroundColor="White" Grid.Column="0"/>
-            <BoxView BackgroundColor="White" Grid.Column="2"/>
-        </Grid>
+            <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
+            </Grid>
 
-        <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-            <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-            <BoxView BackgroundColor="White" Grid.Row="2"/>
-        </Grid>
+            <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
+            </Grid>
 
-        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-            <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
-        </Grid>
+            <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
+                <Button Text="- ACCOUNT -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+                <Button Text="- HOME -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+                <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+            </Grid>
 
-        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
-        <!-- End Background Definition -->
+            <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <!-- End Background Definition -->
 
-        <Grid Grid.Row="1">
-            <CollectionView x:Name="genreGrid" Margin="150,40,150,25" ItemsUpdatingScrollMode="KeepScrollOffset">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20" HorizontalItemSpacing="20"/>
-                </CollectionView.ItemsLayout>
+            <Grid Grid.Row="1">
+                <CollectionView x:Name="genreGrid" Margin="150,40,150,25" ItemsUpdatingScrollMode="KeepScrollOffset">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20" HorizontalItemSpacing="20"/>
+                    </CollectionView.ItemsLayout>
                 
-                <CollectionView.ItemTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <Frame BackgroundColor="{Binding Source={x:Reference genrePage}, Path=BindingContext.pageTheme.accent}">
+                                    <Grid RowDefinitions="*,2*">
+                                        <VerticalStackLayout>
+                                            <Grid>
+                                                <VerticalStackLayout>
+                                                    <Label Text="{Binding movieTitle}" VerticalOptions="Center" TextColor="{Binding Source={x:Reference genrePage}, Path=BindingContext.pageTheme.background}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                                                    <Button Text="See More" TextColor="Black" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center" Command="{Binding Source={x:Reference genrePage}, Path=BindingContext.goMoviePage}" CommandParameter="{Binding .}"/>
+                                                </VerticalStackLayout>
+                                                <ImageButton Source="{Binding posterPath}" Aspect="AspectFill" Command="{Binding Source={x:Reference genrePage}, Path=BindingContext.goMoviePage}" CommandParameter="{Binding .}"/>
+                                            </Grid>
+                                            <HorizontalStackLayout Margin="5">
+                                                <Label Text="&#9734;" VerticalOptions="Center" TextColor="{Binding Source={x:Reference genrePage}, Path=BindingContext.pageTheme.background}" FontSize="15" Margin="0,0,5,0"/>
+                                                <Label Text="{Binding movieRating}" TextColor="{Binding Source={x:Reference genrePage}, Path=BindingContext.pageTheme.background}"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                
+                    <CollectionView.Footer>
+                        <Button Text="Load More" TextColor="{Binding Source={x:Reference genrePage}, Path=BindingContext.pageTheme.accent}" FontSize="15" BackgroundColor="{Binding Source={x:Reference genrePage}, Path=BindingContext.pageTheme.background}" VerticalOptions="Center" HorizontalOptions="Center" Clicked="loadMore"/>
+                    </CollectionView.Footer>
+                </CollectionView>
+            </Grid>
+        </Grid>
+
+        <!-- Define Search Button-->
+        <Grid Margin="50,27,50,100" VerticalOptions="Start" HorizontalOptions="Start">
+            <HorizontalStackLayout>
+                <Label Text="&#x26B2;" TextColor="{Binding pageTheme.highlight}" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center" Rotation="45"/>
+                <Label Text="|Search" TextColor="{Binding pageTheme.highlight}" FontSize="15" VerticalOptions="Center" Margin="7,1,2,7"/>
+            </HorizontalStackLayout>
+            <Button VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="startSearch"/>
+        </Grid>
+
+        <!-- Handle Search Output - Layered Above Everything -->
+        <Grid RowDefinitions="75,*,100" ColumnDefinitions="150,*,150" x:Name="searchGrid" IsVisible="False">
+            <!-- Handle User Clicking Off Search Bar -->
+            <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
+
+            <!-- Define Search Bar -->
+            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
+
+            <!-- Query and Display Search Results -->
+            <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <VerticalStackLayout>
-                            <Frame>
-                                <Grid RowDefinitions="*,2*">
-                                    <VerticalStackLayout>
-                                        <Grid>
-                                            <VerticalStackLayout>
-                                                <Label Text="{Binding movieTitle}" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-                                                <Button Text="See More" TextColor="Black" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                            </VerticalStackLayout>
-                                            <ImageButton Source="{Binding posterPath}" Aspect="AspectFill"/>
-                                        </Grid>
-                                        <Label Text="{Binding movieRating}" Margin="5,0"/>
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </Frame>
-                        </VerticalStackLayout>
+                        <ViewCell>
+                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0" Command="{Binding Source={x:Reference genrePage}, Path=BindingContext.goMoviePage}" CommandParameter="{Binding .}"/>
+                        </ViewCell>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-                
-                <CollectionView.Footer>
-                    <Button Text="Load More" TextColor="White" FontSize="15" BackgroundColor="#151515" VerticalOptions="Center" HorizontalOptions="Center" Clicked="loadMore"/>
-                </CollectionView.Footer>
-            </CollectionView>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
+
+        <Button Text="&lt; Return" TextColor="{Binding pageTheme.highlight}" BackgroundColor="{Binding pageTheme.background}" VerticalOptions="End" HorizontalOptions="Start" Margin="20,10" Clicked="goExplore"/>
     </Grid>
 </ContentPage>

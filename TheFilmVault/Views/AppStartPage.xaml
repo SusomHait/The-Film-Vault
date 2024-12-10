@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.AppStartPage"
-             Title="AppStartPage" BackgroundColor="#151515">
+             Title="AppStartPage" BackgroundColor="{Binding pageTheme.background}" x:Name="appStartPage">
 
     <Grid>
         <Grid Padding="100,75">
@@ -10,18 +10,18 @@
             <Grid RowDefinitions="*,4,*,4,*,4,*" ColumnDefinitions="*,4,*,4,*,4,*">
                 <!-- Define Corner Pieces -->
                 <Grid Grid.Row="0" Grid.Column="0" RowDefinitions="4,*,*" ColumnDefinitions="4,*,*">
-                    <BoxView Grid.ColumnSpan="2" BackgroundColor="White"/>
-                    <BoxView Grid.RowSpan="2" BackgroundColor="White"/>
+                    <BoxView Grid.ColumnSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
+                    <BoxView Grid.RowSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
 
                     <!-- Define REC Symbol -->
-                    <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Padding="20" Stroke="#151515">
+                    <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Padding="20" Stroke="Transparent">
                         <VerticalStackLayout>
                             <HorizontalStackLayout>
-                                <Ellipse Fill="#f3c045" HeightRequest="50" WidthRequest="50"/>
-                                <Label Text="REC" TextColor="#f3c045" FontFamily="CourierBold" VerticalOptions="Center" Margin="10,8,0,0" FontSize="35"/>
+                                <Ellipse Fill="{Binding pageTheme.highlight}" HeightRequest="50" WidthRequest="50"/>
+                                <Label Text="REC" TextColor="{Binding pageTheme.highlight}" FontFamily="CourierBold" VerticalOptions="Center" Margin="10,8,0,0" FontSize="35"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Margin="7">
-                                <Label Text="12:03:24 " TextColor="White" FontFamily="CourierBold" FontSize="12"/>
+                                <Label Text="12:03:24 " TextColor="{Binding pageTheme.highlight}" FontFamily="CourierBold" FontSize="12"/>
                                 <Label Text="| 20:24" TextColor="Gray" FontFamily="CourierBold" FontSize="12"/>
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
@@ -29,42 +29,42 @@
                 </Grid>
 
                 <Grid Grid.Row="6" Grid.Column="0" RowDefinitions="*,*,4" ColumnDefinitions="4,*,*">
-                    <BoxView Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="White"/>
-                    <BoxView Grid.Row="1" Grid.RowSpan="2" BackgroundColor="White"/>
+                    <BoxView Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
+                    <BoxView Grid.Row="1" Grid.RowSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
                 </Grid>
 
                 <Grid Grid.Row="0" Grid.Column="6" RowDefinitions="4,*,*" ColumnDefinitions="*,*,4">
-                    <BoxView Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White"/>
-                    <BoxView Grid.Column="2" Grid.RowSpan="2" BackgroundColor="White"/>
+                    <BoxView Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
+                    <BoxView Grid.Column="2" Grid.RowSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
                 </Grid>
 
                 <Grid Grid.Row="6" Grid.Column="6" RowDefinitions="*,*,4" ColumnDefinitions="*,*,4">
-                    <BoxView Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" BackgroundColor="White"/>
-                    <BoxView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White"/>
+                    <BoxView Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
+                    <BoxView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="{Binding pageTheme.accent}"/>
                 </Grid>
 
                 <!-- Define Background Grid -->
-                <BoxView Grid.Row="1" Grid.ColumnSpan="7" BackgroundColor="White"/>
-                <BoxView Grid.Row="3" Grid.ColumnSpan="7" BackgroundColor="White"/>
-                <BoxView Grid.Row="5" Grid.ColumnSpan="7" BackgroundColor="White"/>
+                <BoxView Grid.Row="1" Grid.ColumnSpan="7" BackgroundColor="{Binding pageTheme.accent}"/>
+                <BoxView Grid.Row="3" Grid.ColumnSpan="7" BackgroundColor="{Binding pageTheme.accent}"/>
+                <BoxView Grid.Row="5" Grid.ColumnSpan="7" BackgroundColor="{Binding pageTheme.accent}"/>
 
-                <BoxView Grid.Column="1" Grid.RowSpan="7" BackgroundColor="White"/>
-                <BoxView Grid.Column="3" Grid.RowSpan="7" BackgroundColor="White"/>
-                <BoxView Grid.Column="5" Grid.RowSpan="7" BackgroundColor="White"/>
+                <BoxView Grid.Column="1" Grid.RowSpan="7" BackgroundColor="{Binding pageTheme.accent}"/>
+                <BoxView Grid.Column="3" Grid.RowSpan="7" BackgroundColor="{Binding pageTheme.accent}"/>
+                <BoxView Grid.Column="5" Grid.RowSpan="7" BackgroundColor="{Binding pageTheme.accent}"/>
             </Grid>
 
             <!-- Create Sign In Button -->
-            <Button Text="Sign In" HorizontalOptions="End" VerticalOptions="Start" Margin="20,10" BackgroundColor="#151515"/>
+            <Button HorizontalOptions="End" VerticalOptions="Start" Margin="20,10" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" x:Name="signInButton" Clicked="goAccount"/>
 
             <!-- Create Central Panel -->
-            <Border VerticalOptions="Center" HorizontalOptions="Fill" Padding="30" MaximumWidthRequest="1000" BackgroundColor="#151515" Stroke="#151515">
+            <Border VerticalOptions="Center" HorizontalOptions="Fill" Padding="30" MaximumWidthRequest="1000" BackgroundColor="{Binding pageTheme.background}" Stroke="Transparent">
                 <VerticalStackLayout>
-                    <Label Text="The Film Vault" TextColor="White" HorizontalOptions="Center" FontSize="72" FontFamily="CourierBold"/>
-                    <BoxView BackgroundColor="#151515" HeightRequest="60"/>
+                    <Label Text="The Film Vault" TextColor="{Binding pageTheme.accent}" HorizontalOptions="Center" FontSize="72" FontFamily="CourierBold"/>
+                    <BoxView BackgroundColor="{Binding pageTheme.background}" HeightRequest="60"/>
                     <Grid ColumnDefinitions="*,*,*">
-                        <Button Text="- MOVIES -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="goMovies"/>
-                        <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="goWatchlist"/>
-                        <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="goAccount"/>
+                        <Button Text="- MOVIES -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="goMovies"/>
+                        <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="goWatchlist"/>
+                        <Button Text="- ACCOUNT -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="goAccount"/>
                     </Grid>
                 </VerticalStackLayout>
             </Border>
@@ -73,14 +73,14 @@
         <!-- Handle Search Output -->
         <Grid x:Name="searchGrid" IsVisible="False" RowDefinitions="*,*">
             <!-- Handle User Clicking Off Search Bar -->
-            <Button x:Name="focusButton" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" IsVisible="True" Clicked="removeSearchOptions"/>
+            <Button x:Name="focusButton" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.RowSpan="2" BackgroundColor="Transparent" IsVisible="True" Clicked="removeSearchOptions"/>
 
             <!-- Query and Display Search Results -->
-            <ListView x:Name="moviesOptions" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,40,0,100" Grid.Row="1" MaximumWidthRequest="935">
+            <ListView x:Name="moviesOptions" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,40,0,100" Grid.Row="1" MaximumWidthRequest="995">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Button BackgroundColor="White" TextColor="#151515" Text="{Binding movieTitle}" CornerRadius="0"/>
+                            <Button BackgroundColor="White" TextColor="#151515" Text="{Binding movieTitle}" CornerRadius="0" Command="{Binding Source={x:Reference appStartPage}, Path=BindingContext.goMovieView}" CommandParameter="{Binding .}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -89,7 +89,7 @@
 
         <!-- Define Search Bar On Top of All Elements-->
         <Grid Margin="0,20,0,0" VerticalOptions="Center">
-            <SearchBar x:Name="searchEntry" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" MaximumWidthRequest="940" Margin="0,10"/>
+            <SearchBar x:Name="searchEntry" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" MaximumWidthRequest="1000" Margin="0,10"/>
         </Grid>
     </Grid>
 

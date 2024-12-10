@@ -42,30 +42,18 @@ namespace TheFilmVault.Models
         }
     }
 
+    public class ExtraDetails : BindableObject, INotifyPropertyChanged
+    {
+        public string? tagline { get; set; }
+        public string? release_date { get; set; }
+        public string? runtime { get; set; }
+        public string? videoPath { get; set; }
+
+    }
+
     public class Genre : BindableObject, INotifyPropertyChanged
     {
         public int genreId { get; set; }
         public string? genreName { get; set; }
-    }
-
-    public class ThemeOptions : BindableObject, INotifyPropertyChanged
-    {
-        public static string path = Path.Combine(FileSystem.AppDataDirectory, "session.txt");
-        public ThemeOptions(string? selection = null)
-        {
-            if (selection == null || selection == "dark")
-            {
-                backing = Color.Parse("#151515");
-                accent = Color.Parse("#FFFFFF");
-            }
-            else if (selection == "light")
-            {
-                backing = Color.Parse("#FFFFFF");
-                accent = Color.Parse("#151515");
-            }
-        }
-
-        public static Color backing { get; set; }
-        public static Color accent { get; set; }
     }
 }

@@ -2,30 +2,82 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.Intercept"
-             Title="Intercept" BackgroundColor="#151515">
+             Title="Intercept" BackgroundColor="{Binding pageTheme.background}">
 
-    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
-        <!-- Start Background Definition -->
-        <Label Text="Create/Login to Account" TextColor="White" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <Entry Placeholder="Search" PlaceholderColor="White" FontSize="15" TextColor="White" HorizontalOptions="Start" Margin="50,20" WidthRequest="200"/>
+    <Grid>
+        <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+            <!-- Start Background Definition -->
+            <Label Text="Create/Login to an Account" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-            <BoxView BackgroundColor="White" Grid.Column="0"/>
-            <BoxView BackgroundColor="White" Grid.Column="2"/>
+            <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
+            </Grid>
+
+            <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
+                <Button Text="- ACCOUNT -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
+                <Button Text="- HOME -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
+                <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+            </Grid>
+
+            <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <!-- End Background Definition -->
+
+            <!-- Main Content -->
+            <Grid Grid.Row="1" VerticalOptions="Center">
+                <StackLayout x:Name="MainStack" VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
+                    <Label x:Name="PageTitle" Text="Log Into or Create an Account" 
+                           TextColor="{Binding pageTheme.accent}" FontSize="30" HorizontalOptions="Center" 
+                           VerticalOptions="Center" Margin="0,20"/>
+
+                    <HorizontalStackLayout x:Name="ButtonRow" Spacing="20" HorizontalOptions="Center">
+                        <Button Text="Create Account" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" 
+                                FontSize="20" Clicked="OnCreateAccountClicked"/>
+                        <Button Text="Login" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" 
+                                FontSize="20" Clicked="OnLoginClicked"/>
+                    </HorizontalStackLayout>
+                </StackLayout>
+
+                <!-- Create Account Form -->
+                <Grid x:Name="CreateAccountStack" IsVisible="False" Margin="30" VerticalOptions="Center">
+                    <VerticalStackLayout HorizontalOptions="FillAndExpand" Margin="150,0" Spacing="10">
+                        <Label x:Name="createErr" TextColor="{Binding pageTheme.highlight}" FontSize="14" HorizontalOptions="Center"/>
+                        <Label Text="Create Account" TextColor="{Binding pageTheme.accent}" FontSize="25" HorizontalOptions="Center"/>
+                        <Entry x:Name="CreateUsername" Placeholder="Username" BackgroundColor="White" 
+                               FontSize="15" MaximumWidthRequest="1000"/>
+                        <Entry x:Name="CreatePassword" Placeholder="Password" BackgroundColor="White"
+                               FontSize="15" MaximumWidthRequest="1000" IsPassword="True"/>
+                        <Button Text="Submit" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}"
+                               FontSize="20" Clicked="OnCreateAccountSubmit" HorizontalOptions="Center"/>
+                        <Button Text="Cancel" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}"
+                                FontSize="14" Clicked="reset" Margin="20" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Login Form -->
+                <Grid x:Name="LoginStack" IsVisible="False" Margin="30" VerticalOptions="Center">
+                    <VerticalStackLayout HorizontalOptions="FillAndExpand" Margin="150,0" Spacing="10">
+                        <Label x:Name="loginErr" TextColor="{Binding pageTheme.highlight}" FontSize="14" HorizontalOptions="Center"/>
+                        <Label Text="Login" TextColor="{Binding pageTheme.accent}" FontSize="25" HorizontalOptions="Center"/>
+                        <Entry x:Name="LoginUsername" Placeholder="Username" BackgroundColor="White" 
+                               FontSize="15" MaximumWidthRequest="1000"/>
+                        <Entry x:Name="LoginPassword" Placeholder="Password" BackgroundColor="White"
+                               FontSize="15" MaximumWidthRequest="1000" IsPassword="True"/>
+                        <Button Text="Submit" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" 
+                                FontSize="20" Clicked="OnLoginSubmit" HorizontalOptions="Center"/>
+                        <Button Text="Cancel" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}"
+                                FontSize="14" Clicked="reset" Margin="20" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+            
         </Grid>
-
-        <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-            <BoxView BackgroundColor="White" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-            <BoxView BackgroundColor="White" Grid.Row="2"/>
-        </Grid>
-
-        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-            <Button Text="- ACCOUNT -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-            <Button Text="- HOME -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-            <Button Text="- WATCHLIST -" BackgroundColor="#151515" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
-        </Grid>
-
-        <Label Text="The Film Vault" TextColor="White" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
-        <!-- End Background Definition -->
+        
+        <!-- Search Bar -->
     </Grid>
 </ContentPage>
