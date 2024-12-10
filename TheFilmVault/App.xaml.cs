@@ -12,7 +12,7 @@ namespace TheFilmVault
         {
             InitializeComponent();
             loadElements();
-
+            
             Preferences.Default.Clear();
 
             // init theme if it doesn't exist
