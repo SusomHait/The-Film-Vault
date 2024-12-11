@@ -20,9 +20,9 @@
             </Grid>
 
             <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-                <Button Text="- ACCOUNT -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0"/>
-                <Button Text="- HOME -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0"/>
-                <Button Text="- WATCHLIST -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2"/>
+                <Button Text="- ACCOUNT -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="goAccount"/>
+                <Button Text="- HOME -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="goHome"/>
+                <Button Text="- WATCHLIST -" TextColor="{Binding pageTheme.accent}" BackgroundColor="{Binding pageTheme.background}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="goWatchlist"/>
             </Grid>
 
             <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>

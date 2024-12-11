@@ -157,5 +157,27 @@ namespace TheFilmVault.Views
 
             return response;
         }
+
+        private void goMovies(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new MovieExplore();
+        }
+
+        private void goHome(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new AppStartPage();
+        }
+
+        private void goWatchlist(object sender, EventArgs e)
+        {
+            if (Preferences.Default.Get("logged_in", false))
+            {
+                App.Current.MainPage = new Watchlist();
+            }
+            else
+            {
+                App.Current.MainPage = new Intercept();
+            }
+        }
     }
 }

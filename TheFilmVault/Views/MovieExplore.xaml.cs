@@ -75,6 +75,35 @@ public partial class MovieExplore : ContentPage
         App.Current.MainPage = new MovieView(calling_movie);
     }
 
+    private void goHome(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new AppStartPage();
+    }
+
+    private void goWatchlist(object sender, EventArgs e)
+    {
+        if (Preferences.Default.Get("logged_in", false))
+        {
+            App.Current.MainPage = new Watchlist();
+        }
+        else
+        {
+            App.Current.MainPage = new Intercept();
+        }
+    }
+    private void goAccount(object sender, EventArgs e)
+    {
+        if (Preferences.Default.Get("logged_in", false))
+        {
+            App.Current.MainPage = new AccountPage();
+
+        }
+        else
+        {
+            App.Current.MainPage = new Intercept();
+        }
+    }
+
     // Carousel control features
     private void goRight(object sender, EventArgs e) { MainThread.BeginInvokeOnMainThread(() => scroll(true)); }
 

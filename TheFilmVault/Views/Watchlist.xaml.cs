@@ -199,7 +199,14 @@ public partial class Watchlist : ContentPage
     private void OnAccountButtonClicked(object sender, EventArgs e)
     {
         // Set the MainPage to AccountPage
-        App.Current.MainPage = new AccountPage();
+        if (Preferences.Default.Get("logged_in", false))
+        {
+            App.Current.MainPage = new AccountPage();
+        }
+        else
+        {
+            App.Current.MainPage = new Intercept();
+        }
     }
 
     private void changeList(object sender, EventArgs e)

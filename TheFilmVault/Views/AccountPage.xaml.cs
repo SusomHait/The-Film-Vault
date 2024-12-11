@@ -40,8 +40,15 @@ public partial class AccountPage : ContentPage
 
 	private void OnWatchlistButtonClicked(object sender, EventArgs e)
 	{
-		App.Current.MainPage = new Watchlist();
-	}
+        if (Preferences.Default.Get("logged_in", false))
+        {
+            App.Current.MainPage = new Watchlist();
+        }
+        else
+        {
+            App.Current.MainPage = new Intercept();
+        }
+    }
 
     private void showPass(object sender, CheckedChangedEventArgs e)
     {
