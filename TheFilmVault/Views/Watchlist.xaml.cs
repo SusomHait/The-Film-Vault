@@ -7,6 +7,7 @@ namespace TheFilmVault.Views;
 
 public partial class Watchlist : ContentPage
 {
+    public ICommand goMoviePage { get; }
     public ICommand moveToWatch { get; }
     public ICommand deleteFromWatch { get; }
     public ICommand deleteFromWatched { get; }
@@ -21,6 +22,10 @@ public partial class Watchlist : ContentPage
         toWatchList.ItemsSource = listElements;
         watchedList.ItemsSource = listElements;
 
+        APIs.movies.Clear();
+        moviesOptions.ItemsSource = APIs.movies;
+
+        goMoviePage = new Command<Movie>(openMoviePage);
         moveToWatch = new Command<ListEntry>(dbMoveToWatch);
         deleteFromWatch = new Command<ListEntry>(dbDeleteFromWatch);
         deleteFromWatched = new Command<ListEntry>(dbDeleteFromWatched);
@@ -207,6 +212,44 @@ public partial class Watchlist : ContentPage
         {
             App.Current.MainPage = new Intercept();
         }
+    }
+
+    private void openMoviePage(Movie calling_movie)
+    {
+        App.Current.MainPage = new MovieView(calling_movie);
+    }
+
+    // Search Bar Functionality
+    private async void searchOptions(string input)
+    {
+        APIs.movies.Clear();
+        await APIs.getMovieData($"https://thefilmvault.pythonanywhere.com/search?query={input}&adult={Preferences.Default.Get("show_adult", "false")}");
+    }
+
+    private void startSearch(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = true;
+        searchEntry.Text = null;
+        moviesOptions.IsVisible = false;
+    }
+
+    private void populateResults(object sender, TextChangedEventArgs e)
+    {
+        if (searchEntry.Text == null || searchEntry.Text.Length == 0)
+        {
+            moviesOptions.IsVisible = false;
+        }
+        else
+        {
+            searchOptions(searchEntry.Text.Trim());
+            moviesOptions.IsVisible = true;
+        }
+    }
+
+    private void removeSearchOptions(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = false;
+        moviesOptions.IsVisible = false;
     }
 
     private void changeList(object sender, EventArgs e)

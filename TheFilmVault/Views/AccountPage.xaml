@@ -2,76 +2,106 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TheFilmVault.Views.AccountPage"
-             Title="AccountPage" BackgroundColor="{Binding pageTheme.background}">
+             Title="AccountPage" BackgroundColor="{Binding pageTheme.background}" x:Name="accPage">
 
-    <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
-        <!-- Start Background Definition -->
-        <Label Text="Account" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
+    <Grid>
+        <Grid RowDefinitions="75,*,75" Padding="0,10,0,0">
+            <!-- Start Background Definition -->
+            <Label Text="Account" TextColor="{Binding pageTheme.highlight}" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
-            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
-            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
+            <Grid ColumnDefinitions="4,*,4" Grid.Row="1" Margin="150,0">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="0"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Column="2"/>
+            </Grid>
+
+            <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
+                <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
+                <Button Text="- MOVIES -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="OnMoviesButtonClicked"/>
+                <Button Text="- HOME -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="OnHomeButtonClicked"/>
+                <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="OnWatchlistButtonClicked"/>
+            </Grid>
+
+            <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <!-- End Background Definition -->
+
+            <Grid Grid.Row="1" RowDefinitions="40,*" ColumnDefinitions="*,4,*" Margin="150,50">
+
+                <Label x:Name="welcomeMsg" FontSize="30" TextColor="{Binding pageTheme.accent}" Grid.ColumnSpan="5" Margin="20,0"/>
+
+                <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="{Binding pageTheme.accent}"/>
+
+                <!-- Username Label -->
+                <VerticalStackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="10" Margin="20">
+                    <Label Text="User Information" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
+
+                    <Label Text="Username:" TextColor="{Binding pageTheme.accent}"/>
+                    <Entry x:Name="userEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" MaximumWidthRequest="1000"/>
+
+                    <Label Text="Password:" TextColor="{Binding pageTheme.accent}"/>
+                    <Entry x:Name="pswdEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" IsPassword="True" MaximumWidthRequest="1000"/>
+
+                    <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="Show Password" TextColor="{Binding pageTheme.accent}" VerticalOptions="Center"/>
+                        <CheckBox x:Name="showPswd" CheckedChanged="showPass" Margin="0,0,0,2" Color="{Binding pageTheme.highlight}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="FillAndExpand" Spacing="10" Margin="20">
+                    <Label Text="Account Options" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
+
+                    <Label Text="Theme:" TextColor="{Binding pageTheme.accent}"/>
+                    <Picker x:Name="themeSelector" BackgroundColor="White" SelectedIndexChanged="changeTheme">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>dark</x:String>
+                                <x:String>light</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <HorizontalStackLayout>
+                        <Label Text="Show Adult Content" TextColor="{Binding pageTheme.accent}" Margin="0,0,5,0" VerticalOptions="Center"/>
+                        <CheckBox x:Name="contentFilter" Color="{Binding pageTheme.highlight}" CheckedChanged="changeFilter"/>
+                    </HorizontalStackLayout>
+
+                    <Button Text="Sign Out" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.highlight}" BorderWidth="2" Clicked="signOut"/>
+                    <Button Text="Delete Account" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.highlight}" BorderWidth="2" Clicked="delAcc"/>
+                </VerticalStackLayout>
+            </Grid>
         </Grid>
 
-        <Grid RowDefinitions="44,*,4" Grid.Row="1" Margin="100,0,100,20">
-            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="0" HeightRequest="4" VerticalOptions="Center"/>
-            <BoxView BackgroundColor="{Binding pageTheme.accent}" Grid.Row="2"/>
+        <!-- Define Search Button-->
+        <Grid Margin="50,27,50,100" VerticalOptions="Start" HorizontalOptions="Start">
+            <HorizontalStackLayout>
+                <Label Text="&#x26B2;" TextColor="{Binding pageTheme.highlight}" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center" Rotation="45"/>
+                <Label Text="|Search" TextColor="{Binding pageTheme.highlight}" FontSize="15" VerticalOptions="Center" Margin="7,1,2,7"/>
+            </HorizontalStackLayout>
+            <Button VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="startSearch"/>
         </Grid>
 
-        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" VerticalOptions="Start">
-            <Button Text="- MOVIES -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="0" Clicked="OnMoviesButtonClicked"/>
-            <Button Text="- HOME -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Margin="20,0" Clicked="OnHomeButtonClicked"/>
-            <Button Text="- WATCHLIST -" BackgroundColor="{Binding pageTheme.background}" TextColor="{Binding pageTheme.accent}" FontSize="25" FontAttributes="Bold" HorizontalOptions="Start" Grid.Column="2" Clicked="OnWatchlistButtonClicked"/>
+        <!-- Handle Search Output - Layered Above Everything -->
+        <Grid RowDefinitions="75,*,100" ColumnDefinitions="150,*,150" x:Name="searchGrid" IsVisible="False">
+            <!-- Handle User Clicking Off Search Bar -->
+            <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
+
+            <!-- Define Search Bar -->
+            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
+
+            <!-- Query and Display Search Results -->
+            <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0" Command="{Binding Source={x:Reference accPage}, Path=BindingContext.goMoviePage}" CommandParameter="{Binding .}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
-
-        <Label Text="The Film Vault" TextColor="{Binding pageTheme.highlight}" FontSize="25" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start"/>
-        <!-- End Background Definition -->
-
-        <Grid Grid.Row="1" RowDefinitions="40,*" ColumnDefinitions="*,4,*" Margin="150,50">
-            
-            <Label x:Name="welcomeMsg" FontSize="30" TextColor="{Binding pageTheme.accent}" Grid.ColumnSpan="5" Margin="20,0"/>
-
-            <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="{Binding pageTheme.accent}"/>
-
-            <!-- Username Label -->
-            <VerticalStackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="10" Margin="20">
-                <Label Text="User Information" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
-                
-                <Label Text="Username:" TextColor="{Binding pageTheme.accent}"/>
-                <Entry x:Name="userEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" MaximumWidthRequest="1000"/>
-
-                <Label Text="Password:" TextColor="{Binding pageTheme.accent}"/>
-                <Entry x:Name="pswdEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" IsPassword="True" MaximumWidthRequest="1000"/>
-
-                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                    <Label Text="Show Password" TextColor="{Binding pageTheme.accent}" VerticalOptions="Center"/>
-                    <CheckBox x:Name="showPswd" CheckedChanged="showPass" Margin="0,0,0,2" Color="{Binding pageTheme.highlight}"/>
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="FillAndExpand" Spacing="10" Margin="20">
-                <Label Text="Account Options" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
-
-                <Label Text="Theme:" TextColor="{Binding pageTheme.accent}"/>
-                <Picker x:Name="themeSelector" BackgroundColor="White" SelectedIndexChanged="changeTheme">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>dark</x:String>
-                            <x:String>light</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-
-                <HorizontalStackLayout>
-                    <Label Text="Show Adult Content" TextColor="{Binding pageTheme.accent}" Margin="0,0,5,0" VerticalOptions="Center"/>
-                    <CheckBox x:Name="contentFilter" Color="{Binding pageTheme.highlight}" CheckedChanged="changeFilter"/>
-                </HorizontalStackLayout>
-
-                <Button Text="Sign Out" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.highlight}" BorderWidth="2" Clicked="signOut"/>
-                <Button Text="Delete Account" TextColor="{Binding pageTheme.accent}" BackgroundColor="Transparent" BorderColor="{Binding pageTheme.highlight}" BorderWidth="2" Clicked="delAcc"/>
-            </VerticalStackLayout>
-        </Grid>
-        
     </Grid>
 
 </ContentPage>

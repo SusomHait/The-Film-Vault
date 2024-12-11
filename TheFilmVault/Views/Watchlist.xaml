@@ -106,6 +106,34 @@
             </Grid>
         </Grid>
 
+        <!-- Define Search Button-->
+        <Grid Margin="50,27,50,100" VerticalOptions="Start" HorizontalOptions="Start">
+            <HorizontalStackLayout>
+                <Label Text="&#x26B2;" TextColor="{Binding pageTheme.highlight}" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center" Rotation="45"/>
+                <Label Text="|Search" TextColor="{Binding pageTheme.highlight}" FontSize="15" VerticalOptions="Center" Margin="7,1,2,7"/>
+            </HorizontalStackLayout>
+            <Button VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="startSearch"/>
+        </Grid>
+
+        <!-- Handle Search Output - Layered Above Everything -->
+        <Grid RowDefinitions="75,*,100" ColumnDefinitions="150,*,150" x:Name="searchGrid" IsVisible="False">
+            <!-- Handle User Clicking Off Search Bar -->
+            <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
+
+            <!-- Define Search Bar -->
+            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
+
+            <!-- Query and Display Search Results -->
+            <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Button BackgroundColor="White" TextColor="Black" LineBreakMode="WordWrap" Text="{Binding movieTitle}" CornerRadius="0" Command="{Binding Source={x:Reference watchlistPage}, Path=BindingContext.goMoviePage}" CommandParameter="{Binding .}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 
 </ContentPage>

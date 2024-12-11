@@ -1,9 +1,11 @@
+using System.Windows.Input;
 using TheFilmVault.Models;
 
 namespace TheFilmVault.Views;
 
 public partial class AccountPage : ContentPage
 {
+    public ICommand goMoviePage { get; }
     public Themes pageTheme { get; set; }
 
     public AccountPage()
@@ -24,6 +26,11 @@ public partial class AccountPage : ContentPage
 		{
             contentFilter.IsChecked = false;
         }
+
+        APIs.movies.Clear();
+        moviesOptions.ItemsSource = APIs.movies;
+
+        goMoviePage = new Command<Movie>(openMoviePage);
 
         BindingContext = this;
     }
@@ -48,6 +55,44 @@ public partial class AccountPage : ContentPage
         {
             App.Current.MainPage = new Intercept();
         }
+    }
+
+    private void openMoviePage(Movie calling_movie)
+    {
+        App.Current.MainPage = new MovieView(calling_movie);
+    }
+
+    // Search Bar Functionality
+    private async void searchOptions(string input)
+    {
+        APIs.movies.Clear();
+        await APIs.getMovieData($"https://thefilmvault.pythonanywhere.com/search?query={input}&adult={Preferences.Default.Get("show_adult", "false")}");
+    }
+
+    private void startSearch(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = true;
+        searchEntry.Text = null;
+        moviesOptions.IsVisible = false;
+    }
+
+    private void populateResults(object sender, TextChangedEventArgs e)
+    {
+        if (searchEntry.Text == null || searchEntry.Text.Length == 0)
+        {
+            moviesOptions.IsVisible = false;
+        }
+        else
+        {
+            searchOptions(searchEntry.Text.Trim());
+            moviesOptions.IsVisible = true;
+        }
+    }
+
+    private void removeSearchOptions(object sender, EventArgs e)
+    {
+        searchGrid.IsVisible = false;
+        moviesOptions.IsVisible = false;
     }
 
     private void showPass(object sender, CheckedChangedEventArgs e)
