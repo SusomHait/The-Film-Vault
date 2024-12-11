@@ -121,4 +121,27 @@ public partial class MovieView : ContentPage
     {
         App.Current.MainPage = new MovieView(calling_movie);
     }
+
+    private void watchAdd(object sender, EventArgs e)
+    {
+        HttpClient client = new HttpClient();
+
+        int id = Preferences.Default.Get("userID", -1);
+        string title = Uri.EscapeDataString(current.movieTitle);
+        HttpResponseMessage response = client.GetAsync($"https://thefilmvault.pythonanywhere.com/add_entry?id={id}&movie_id={current.movieId}&title={title}&list_type=Watchlist&movie_length={extra.runtime}").GetAwaiter().GetResult();
+
+        int return_code = (int)response.StatusCode;
+        switch (return_code)
+        {
+            case 200:
+                DisplayAlert("Success", "Entry Added.", "OK");
+                break;
+            case 201:
+                DisplayAlert("Existing Entry", "This Movie is Already in your Lists.", "OK");
+                break;
+            default:
+                DisplayAlert("Error", "An Error Occured, Please Try Again Later.", "OK");
+                break;
+        }
+    }
 }

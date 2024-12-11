@@ -20,7 +20,7 @@ namespace TheFilmVault
             }
             if (!Preferences.Default.ContainsKey("userID"))
             {
-                Preferences.Default.Set("userID", "none");
+                Preferences.Default.Set("userID", -1);
             }
             if (!Preferences.Default.ContainsKey("username"))
             {

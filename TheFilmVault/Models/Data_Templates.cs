@@ -56,4 +56,11 @@ namespace TheFilmVault.Models
         public int genreId { get; set; }
         public string? genreName { get; set; }
     }
+
+    public class ListEntry : BindableObject, INotifyPropertyChanged
+    {
+        public long movieID { get; set; }
+        public string? movieTitle { get; set; }
+        public int runtime { get; set; }
+    }
 }
