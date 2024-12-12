@@ -82,7 +82,7 @@
             <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
 
             <!-- Define Search Bar -->
-            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
+            <SearchBar x:Name="searchEntry" TextColor="Black" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
 
             <!-- Query and Display Search Results -->
             <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">

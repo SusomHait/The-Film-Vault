@@ -39,10 +39,10 @@
                     <Label Text="User Information" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
 
                     <Label Text="Username:" TextColor="{Binding pageTheme.accent}"/>
-                    <Entry x:Name="userEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" MaximumWidthRequest="1000"/>
+                    <Entry x:Name="userEntry" BackgroundColor="White" TextColor="Black" PlaceholderColor="Black" IsEnabled="False" MaximumWidthRequest="1000"/>
 
                     <Label Text="Password:" TextColor="{Binding pageTheme.accent}"/>
-                    <Entry x:Name="pswdEntry" BackgroundColor="White" PlaceholderColor="Black" IsEnabled="False" IsPassword="True" MaximumWidthRequest="1000"/>
+                    <Entry x:Name="pswdEntry" BackgroundColor="White" TextColor="Black" PlaceholderColor="Black" IsEnabled="False" IsPassword="True" MaximumWidthRequest="1000"/>
 
                     <HorizontalStackLayout HorizontalOptions="FillAndExpand">
                         <Label Text="Show Password" TextColor="{Binding pageTheme.accent}" VerticalOptions="Center"/>
@@ -54,7 +54,7 @@
                     <Label Text="Account Options" FontSize="20" TextColor="{Binding pageTheme.accent}"/>
 
                     <Label Text="Theme:" TextColor="{Binding pageTheme.accent}"/>
-                    <Picker x:Name="themeSelector" BackgroundColor="White" SelectedIndexChanged="changeTheme">
+                    <Picker x:Name="themeSelector" TextColor="Black" BackgroundColor="White" SelectedIndexChanged="changeTheme">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>dark</x:String>
@@ -89,7 +89,7 @@
             <Button x:Name="focusButton" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent" Clicked="removeSearchOptions"/>
 
             <!-- Define Search Bar -->
-            <SearchBar x:Name="searchEntry" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
+            <SearchBar x:Name="searchEntry" TextColor="Black" Grid.Column="1" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="1000" Margin="0,18,0,0"/>
 
             <!-- Query and Display Search Results -->
             <ListView x:Name="moviesOptions" Grid.Row="1" Grid.Column="1" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Fill" MaximumWidthRequest="995">
