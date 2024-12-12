@@ -89,7 +89,7 @@
 
         <!-- Define Search Bar On Top of All Elements-->
         <Grid Margin="0,20,0,0" VerticalOptions="Center">
-            <SearchBar x:Name="searchEntry" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" MaximumWidthRequest="1000" Margin="0,10"/>
+            <SearchBar x:Name="searchEntry" TextColor="Black" Placeholder="Search for a movie..." BackgroundColor="White" TextChanged="populateResults" VerticalOptions="Center" MaximumWidthRequest="1000" Margin="0,10"/>
         </Grid>
     </Grid>
 
